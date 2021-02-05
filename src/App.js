@@ -1,8 +1,12 @@
+import HomePage from './pages/homepage/homepage.component';
 
+import './App.scss';
 
 function App() {
   return (
-    <div className="App">Hello World</div>
+    <div className="container">
+      <HomePage />
+    </div>
   );
 }
 

@@ -1,0 +1,32 @@
+.header {
+  height: 10rem;
+  //   margin-bottom: 2.5rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__link-logo {
+    flex: 0 0 7rem;
+  }
+
+  &__nav-links {
+    flex: 0 0 calc(100% - 7rem);
+    height: 100%;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  &__link {
+    &:link,
+    &:visited {
+      font-size: 1.6rem;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1rem 1.5rem;
+      color: var(--color-black);
+    }
+  }
+}

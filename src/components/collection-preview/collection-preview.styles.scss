@@ -1,0 +1,15 @@
+.collection-preview {
+  margin-bottom: 3rem;
+
+  &__title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  &__items {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2.5rem;
+  }
+}

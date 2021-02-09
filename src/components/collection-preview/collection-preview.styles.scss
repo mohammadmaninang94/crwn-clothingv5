@@ -8,7 +8,11 @@
   }
 
   &__items {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(22.5rem, 1fr));
+    column-gap: 4.5rem;
+    row-gap: 2rem;
+
     justify-content: space-between;
     margin-top: 2.5rem;
   }

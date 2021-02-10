@@ -13,12 +13,23 @@
   text-transform: uppercase;
   background-color: var(--color-black);
   color: var(--color-white);
-  transition: all .1s ease-in;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+  transition: all 0.1s ease-in;
+  cursor: pointer;
 
   &:hover,
   &:active {
-    color: var(--color-black);
-    background-color: var(--color-white);
-    border: 1px solid var(--color-black);
+    background-color: var(--color-black-light);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+  }
+
+  &--google {
+    background-color: var(--color-google);
+
+    &:hover,
+    &:active {
+      color: var(--color-white);
+      background-color: var(--color-google-dark);
+    }
   }
 }

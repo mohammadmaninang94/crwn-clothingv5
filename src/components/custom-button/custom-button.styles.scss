@@ -11,16 +11,16 @@
   font-family: inherit;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  background-color: var(--color-black);
+  background-color: var(--color-black-light);
   color: var(--color-white);
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1rem 2rem rgba(var(--color-black-rgb), 0.2);
   transition: all 0.1s ease-in;
   cursor: pointer;
 
   &:hover,
   &:active {
-    background-color: var(--color-black-light);
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    background-color: var(--color-black);
+    box-shadow: 0 0.5rem 1rem rgba(var(--color-black-rgb), 0.2);
   }
 
   &--google {

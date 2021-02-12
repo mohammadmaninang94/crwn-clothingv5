@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
@@ -47,13 +47,20 @@ class App extends React.Component {
   }
 
   render() {
+    const { currentUser } = this.state;
     return (
       <div className="container">
-        <Header currentUser={this.state.currentUser} />
+        <Header currentUser={currentUser} />
         <Switch>
           <Route exact path='/' render={() => <HomePage />} />
           <Route path='/shop' render={() => <ShopPage />} />
-          <Route path='/signin' render={() => <SignInSignUpPage />} />
+          <Route path='/signin' render={() =>
+            currentUser ? (
+              <Redirect to='/' />
+            ) : (
+                <SignInSignUpPage />
+              )
+          } />
         </Switch>
       </div>
     );

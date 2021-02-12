@@ -1,7 +1,7 @@
 @mixin shrinkLabel {
-    top: 5rem;
-    font-size: 1.2rem;
-    color: var(--color-black);
+  top: -1.5rem;
+  font-size: 1.2rem;
+  color: var(--color-black);
 }
 
 .custom-input {
@@ -11,7 +11,7 @@
   &__input {
     display: block;
     width: 100%;
-    padding: 1rem 1rem 1rem .5rem;
+    padding: 1rem 1rem 1rem 0.5rem;
     margin: 2.5rem 0;
     background-color: var(--color-white);
     border: none;
@@ -24,8 +24,8 @@
     }
 
     &:focus:invalid {
-        border-bottom: 1px solid var(--color-red);
-      }
+      border-bottom: 1px solid var(--color-red);
+    }
   }
 
   &__label {
@@ -40,7 +40,7 @@
   }
 
   &__input:focus + &__label,
-  &__label--shrink{
+  &__label--shrink {
     @include shrinkLabel();
   }
 }

@@ -24,7 +24,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
     const userRef = firestore.doc(`users/${userAuth.uid}`); // queryReferece - documentReference
     const userSnapshot = await userRef.get(); // document snapshot
-    console.log(userSnapshot);
+
     if (!userSnapshot.exists) {
         const { displayName, email } = userAuth;
         const createdAt = new Date();
@@ -41,7 +41,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         }
     }
 
-    return { userRef, userSnapshot };
+    return userRef;
 };
 
 var provider = new firebase.auth.GoogleAuthProvider();

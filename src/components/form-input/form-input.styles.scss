@@ -36,6 +36,7 @@
     font-size: 1.6rem;
     color: var(--color-black-light);
     transition: all 300ms ease;
+    pointer-events: none;
   }
 
   &__input:focus + &__label,

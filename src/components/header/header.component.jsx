@@ -3,11 +3,14 @@ import { connect } from 'react-redux';
 
 import { auth } from '../../firebase/firebase.utils';
 
-import { ReactComponent as Logo } from '../../assests/image/4.2 crown.svg';
+import { ReactComponent as Logo } from '../../assests/image/crown.svg';
+
+import CartIcon from '../cart-icon/cart-icon.component';
+import CartDropdown from '../cart-dropdown/cart-dropdown.conponent';
 
 import './header.styles.scss';
 
-const Header = ({ currentUser }) => (
+const Header = ({ currentUser, hidden }) => (
     <header className='header'>
         <NavLink className='header__link header__link-logo' activeClassName='header__link--active' exact to='/'>
             <Logo />
@@ -20,13 +23,15 @@ const Header = ({ currentUser }) => (
                 :
                 <NavLink className='header__link' activeClassName='header__link--active' to='/signin'>sign in</NavLink>
             }
-            <NavLink className='header__link' activeClassName='header__link--active' to='/'>cart</NavLink>
+            <CartIcon />
         </nav>
+        {hidden ? null : (<CartDropdown />)}
     </header>
 );
 
-const mapStateToProps = state => ({
-    currentUser: state.user.currentUser
+const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
+    currentUser,
+    hidden
 })
 
 export default connect(mapStateToProps)(Header);

@@ -1,0 +1,1 @@
+export const convertToPHPCurrency = (price) => price.toLocaleString("en", { style: "currency", currency: "PHP", minimumFractionDigits: 0 });

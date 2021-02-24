@@ -1,11 +1,17 @@
 .collection-item {
   height: 35rem;
   width: 100%;
+  position: relative;
 
   &__img {
     width: 100%;
     height: 90%;
     object-fit: cover;
+  }
+
+  &:hover &__img,
+  &:active &__img {
+    opacity: .8;
   }
 
   &__caption {
@@ -17,5 +23,19 @@
   &__price {
     font-size: 1.8rem;
     font-weight: 300;
+  }
+
+  &__btn {
+    width: 80%;
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+  }
+
+  &:hover &__btn,
+  &:active &__btn {
+    display: block;
   }
 }

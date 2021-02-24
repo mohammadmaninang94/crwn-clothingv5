@@ -32,4 +32,17 @@
       background-color: var(--color-google-dark);
     }
   }
+
+  &--inverted {
+    color: var(--color-black);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-black-light);
+
+    &:hover,
+    &:active {
+      color: var(--color-white);
+      background-color: var(--color-black);
+      box-shadow: 0 0.5rem 1rem rgba(var(--color-black-rgb), 0.2);
+    }
+  }
 }

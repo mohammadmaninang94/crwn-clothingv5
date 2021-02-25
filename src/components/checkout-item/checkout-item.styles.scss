@@ -1,0 +1,23 @@
+.checkout-item {
+  min-height: 10rem;
+
+  & td:not(:last-of-type){
+    width: 31%;
+  }
+
+  & td:not(:first-of-type){
+    text-align: center;
+  }
+
+  &__product {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  &__img {
+    height: 100%;
+    width: 70%;
+    margin: 2rem 0;
+  }
+}

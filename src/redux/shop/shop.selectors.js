@@ -8,7 +8,12 @@ export const selectShopCollections = createSelector(
     shop => shop.collections
 );
 
-export const selectShopCollection = memoize(collectionId => createSelector(
+export const selectShopCollectionForPreview = createSelector(
     [selectShopCollections],
-    collections => collections.find(collection => collection.title.toLowerCase() === collectionId.toLowerCase()))
+    collections => Object.keys(collections).map(key => collections[key])
 );
+
+export const selectShopCollection = memoize(collectionParamUrl => createSelector(
+    [selectShopCollections],
+    collections => collections[collectionParamUrl]
+));

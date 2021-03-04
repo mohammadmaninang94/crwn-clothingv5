@@ -7,6 +7,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 
   &:hover &__background-image,
   &:active &__background-image {

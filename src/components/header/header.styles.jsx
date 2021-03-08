@@ -1,25 +1,27 @@
-.header {
-  height: 10rem;
-  //   margin-bottom: 2.5rem;
+import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+export const HeaderContainer = styled.div`
+    height: 10rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
 
-  &__link-logo {
+export const LogoContainer = styled(NavLink)`
     flex: 0 0 7rem;
-  }
+`;
 
-  &__nav-links {
+export const NavContainer = styled.nav`
     flex: 0 0 calc(100% - 7rem);
     height: 100%;
 
     display: flex;
     justify-content: flex-end;
     align-items: center;
-  }
+`;
 
-  &__link {
+export const HeaderLink = styled(NavLink)`
     &,
     &:link,
     &:visited {
@@ -34,5 +36,4 @@
     &:focus {
       outline: none;
     }
-  }
-}
+`;

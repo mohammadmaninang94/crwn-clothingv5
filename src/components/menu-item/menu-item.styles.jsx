@@ -39,30 +39,6 @@ const getMenuItemStyles = props => {
     }
 };
 
-export const MenuItemContainer = styled.div`
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid var(--color-black-light);
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-
-    ${getMenuItemStyles}
-
-    &:hover .background-image,
-    &:active .background-image {
-        transform: scale(1.1);
-    }
-
-    &:hover .content,
-    &:active .content {
-        opacity: .9;
-    }
-`;
-
 export const BackgroundImageContainer = styled.div`
     width: 100%;
     height: 100%;
@@ -86,6 +62,30 @@ export const ContentContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+`;
+
+export const MenuItemContainer = styled.div`
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--color-black-light);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    ${getMenuItemStyles}
+
+    &:hover ${BackgroundImageContainer},
+    &:active ${BackgroundImageContainer} {
+        transform: scale(1.1);
+    }
+
+    &:hover ${ContentContainer},
+    &:active ${ContentContainer} {
+        opacity: .9;
+    }
 `;
 
 export const ContentTitle = styled.h2`

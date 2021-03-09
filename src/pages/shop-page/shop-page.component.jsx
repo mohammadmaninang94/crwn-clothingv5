@@ -10,8 +10,6 @@ import { updateCollections } from '../../redux/shop/shop.actions';
 import CollectionOveriew from '../../components/collection-overview/collection-overview.component';
 import CollectionPage from '../collection-page/collection-page.component';
 
-import './shop-page.styles.scss';
-
 class ShopPage extends React.Component {
     unsubscribeFromSnapshot = null;
 

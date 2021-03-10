@@ -4,28 +4,31 @@ import { addItem, removeItem, clearItem } from '../../redux/cart/cart.actions';
 
 import { convertToPHPCurrency } from '../../components/component.utils.js';
 
-import './checkout-item.styles.scss';
+import {
+    CheckoutItemContainer, CheckoutItemProduct, CheckoutItemImg,
+    CheckoutItemQty, CheckoutItemArrow, CheckoutItemRemove
+} from './checkout-item.styles';
 
 const CheckoutItem = ({ item, addItemToCart, removeItemFromCart, clearItemFromCart }) => {
     const { name, imageUrl, price, quantity } = item;
     const minQtyPerItem = 1;
     const maxQtyPerItem = 10;
     return (
-        <tr className='checkout-item'>
+        <CheckoutItemContainer>
             <td>
-                <figure className='checkout-item__product'>
-                    <img src={imageUrl} alt={name} className='checkout-item__img' />
+                <CheckoutItemProduct>
+                    <CheckoutItemImg src={imageUrl} alt={name} />
                     <figcaption>{name}</figcaption>
-                </figure>
+                </CheckoutItemProduct>
             </td>
             <td>
-                <button className='checkout-item__arrow' onClick={() => quantity > minQtyPerItem ? removeItemFromCart(item) : null}>&#10094;</button>
-                <span className='checkout-item__quantity'>{quantity}</span>
-                <button className='checkout-item__arrow' onClick={() => quantity < maxQtyPerItem ? addItemToCart(item) : null}>&#10095;</button>
+                <CheckoutItemArrow onClick={() => quantity > minQtyPerItem ? removeItemFromCart(item) : null}>&#10094;</CheckoutItemArrow>
+                <CheckoutItemQty>{quantity}</CheckoutItemQty>
+                <CheckoutItemArrow onClick={() => quantity < maxQtyPerItem ? addItemToCart(item) : null}>&#10095;</CheckoutItemArrow>
             </td>
             <td>{convertToPHPCurrency(price)}</td>
-            <td><button className='checkout-item__remove' onClick={() => clearItemFromCart(item)}>&#10005;</button></td>
-        </tr>
+            <td><CheckoutItemRemove onClick={() => clearItemFromCart(item)}>&#10005;</CheckoutItemRemove></td>
+        </CheckoutItemContainer>
     )
 };
 

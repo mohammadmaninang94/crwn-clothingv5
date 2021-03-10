@@ -17,6 +17,6 @@ const CollectionOveriew = ({ collections }) => (
 
 const mapStateToProps = createStructuredSelector({
     collections: selectShopCollectionForPreview
-})
+});
 
 export default connect(mapStateToProps)(CollectionOveriew);

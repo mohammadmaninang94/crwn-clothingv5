@@ -28,7 +28,6 @@ const CartDropdown = ({ cartItems, history, dispatch }) => (
                 dispatch(toggleCartHidden());
             }}>go to checkout</CartDropdownButton>
         ) : null}
-
     </CartDropdownContainer>
 );
 

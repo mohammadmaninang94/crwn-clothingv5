@@ -1,14 +1,14 @@
-import './form-input.styles.scss';
+import {CustomInputContainer, CustomLabel, CustomInput} from './form-input.styles';
 
 const FormInput = ({ handleChange, label, ...otherProps }) => (
-    <div className='custom-input'>
-        <input {...otherProps} onChange={handleChange} className='custom-input__input' />
+    <CustomInputContainer>
+        <CustomInput {...otherProps} onChange={handleChange} />
         {
             label ?
-                (<label className={`${otherProps.value.length ? 'custom-input__label--shrink' : ''} custom-input__label`}>{label}</label>) :
+                (<CustomLabel hasValue={!!otherProps.value.length}>{label}</CustomLabel>) :
                 null
         }
-    </div>
+    </CustomInputContainer>
 );
 
 export default FormInput;

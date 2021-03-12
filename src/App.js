@@ -14,7 +14,7 @@ import CheckoutPage from './pages/checkout-page/checkout-page.component';
 
 import Header from './components/header/header.component';
 
-import './App.scss';
+import { AppContainer } from './App.styles';
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -45,7 +45,7 @@ class App extends React.Component {
   render() {
     const { currentUser } = this.props;
     return (
-      <div className="container">
+      <AppContainer>
         <Header />
         <Switch>
           <Route exact path='/' render={() => <HomePage />} />
@@ -55,11 +55,11 @@ class App extends React.Component {
             currentUser ? (
               <Redirect to='/' />
             ) : (
-                <SignInSignUpPage />
-              )
+              <SignInSignUpPage />
+            )
           } />
         </Switch>
-      </div>
+      </AppContainer>
     );
   }
 }

@@ -2,30 +2,33 @@ import CheckoutItem from '../../components/checkout-item/checkout-item.component
 
 import { convertToPHPCurrency } from '../../components/component.utils.js';
 
-import './checkout-table.styles.scss';
+import {
+    CheckoutTableContainer, CheckoutTableHeader,
+    CheckoutTableBody, CheckoutTableFoot
+} from './checkout-table.styles';
 
 const CheckoutTable = ({ cartItems, cartTotalPrice }) => (
-    <table className='checkout-table' cellSpacing="0" cellPadding="0">
-        <thead className='checkout-table__head'>
+    <CheckoutTableContainer cellSpacing="0" cellPadding="0">
+        <CheckoutTableHeader>
             <tr>
                 <th>Product</th>
                 <th>Quantity</th>
                 <th>Price</th>
                 <th>Remove</th>
             </tr>
-        </thead>
-        <tbody className='checkout-table__body'>
+        </CheckoutTableHeader>
+        <CheckoutTableBody>
             {cartItems.map((item) => (
                 <CheckoutItem key={item.id} item={item} />
             ))}
-        </tbody>
-        <tfoot className='checkout-table__foot'>
+        </CheckoutTableBody>
+        <CheckoutTableFoot>
             <tr>
                 <td colSpan='3'>Total:</td>
                 <td className='checkout-table__cart-total'>{convertToPHPCurrency(cartTotalPrice)}</td>
             </tr>
-        </tfoot>
-    </table>
+        </CheckoutTableFoot>
+    </CheckoutTableContainer>
 );
 
 export default CheckoutTable;

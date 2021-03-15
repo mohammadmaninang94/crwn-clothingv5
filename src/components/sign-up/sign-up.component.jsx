@@ -1,6 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
+import { signUpStart } from '../../redux/user/user.actions';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -22,42 +23,12 @@ class SignUp extends React.Component {
     handleSubmit = async event => {
         event.preventDefault();
 
+        const { signUp } = this.props;
+
         const { displayName, email, password, confirmPassword } = this.state;
 
         if (password === confirmPassword) {
-            try {
-                const { user } = await auth.createUserWithEmailAndPassword(email, password);
-
-                await createUserProfileDocument(user, {
-                    displayName
-                });
-
-                this.setState({
-                    displayName: '',
-                    email: '',
-                    password: '',
-                    confirmPassword: ''
-                });
-            } catch (error) {
-                const errorCode = error.code;
-                let errorMessage = error.message;
-
-                switch (errorCode) {
-                    case 'auth/email-already-in-use':
-                        errorMessage = 'Email already exists';
-                        break;
-                    case 'auth/invalid-email':
-                        errorMessage = 'Invalid email';
-                        break;
-                    case 'auth/weak-password':
-                        errorMessage = 'The password is too weak.';
-                        break;
-                    default:
-                        errorMessage = error.message;
-                        break;
-                }
-                alert(errorMessage);
-            }
+            signUp({ displayName, email, password });
         } else {
             alert("passwords don't match");
         }
@@ -112,4 +83,8 @@ class SignUp extends React.Component {
     }
 };
 
-export default SignUp;
+const mapDispatchToProps = dispatch => ({
+    signUp: userCredentials => dispatch(signUpStart(userCredentials))
+})
+
+export default connect(null, mapDispatchToProps)(SignUp);

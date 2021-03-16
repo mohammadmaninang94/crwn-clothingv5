@@ -26,7 +26,7 @@ const App = ({ checkUserSession, currentUser }) => {
       <Switch>
         <Route exact path='/' render={() => <HomePage />} />
         <Route path='/shop' render={routeProps => <ShopPage {...routeProps} />} />
-        <Route exact path='/checkout' render={() => <CheckoutPage />} />
+        <Route exact path='/checkout' render={({ history }) => currentUser ? <CheckoutPage /> : history.push('/signin')} />
         <Route path='/signin' render={() =>
           currentUser ? (
             <Redirect to='/' />

@@ -7,7 +7,12 @@ export const selectCurrentUser = createSelector(
     user => user.currentUser
 );
 
-export const selectUserMessage = createSelector(
+export const selectUserSignInMessage = createSelector(
     [selectUser],
-    user => user.message
+    user => user.signInMessage
+);
+
+export const selectUserSignUpMessage = createSelector(
+    [selectUser],
+    user => user.signUpMessage
 );

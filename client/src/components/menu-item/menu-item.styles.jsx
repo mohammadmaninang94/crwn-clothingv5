@@ -2,24 +2,47 @@ import styled, { css } from 'styled-components';
 
 const hatsStyles = css`
     grid-column: col-start 1 / col-end 2;
+
+    @media only screen and (max-width: 37.5em) {
+        grid-column: col-start 1 / col-end 3;
+    }
 `;
 
 const jacketsStyles = css`
     grid-column: col-start 3 / col-end 4;
+
+    @media only screen and (max-width: 37.5em) {
+        grid-column: col-start 4 / col-end 6;
+    }
 `;
 
 const sneakersStyles = css`
     grid-column: col-start 5 / col-end 7;
+
+    @media only screen and (max-width: 37.5em) {
+        grid-column: col-start 1 / col-end 3;
+        grid-row: 2 / 3;
+    }
 `;
 
 const womensStyles = css`
     grid-column: col-start 1 / col-end 3;
     grid-row: 2 / 3;
+
+    @media only screen and (max-width: 37.5em) {
+        grid-column: col-start 4 / col-end 6;
+        grid-row: 2 / 3;
+    }
 `;
 
 const mensStyles = css`
     grid-column: col-start 4 / col-end 7;
-    grid-row: 2 / 3;;
+    grid-row: 2 / 3;
+
+    @media only screen and (max-width: 37.5em) {
+        grid-column: col-start 1 / col-end 6;
+        grid-row: 3 / 3;
+    }
 `;
 
 const getMenuItemStyles = props => {

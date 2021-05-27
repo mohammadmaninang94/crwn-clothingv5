@@ -32,6 +32,24 @@ export const CollectionItemContainer = styled.figure`
             display: block;
         }
     }
+
+    @media only screen and (max-width: 37.5em) {
+        &:hover,
+        &:active {
+            ${CollectionItemImg}{
+                opacity: 1;
+            }
+
+            ${CollectionItemButton}{
+                opacity: 1;
+            }
+        }
+
+        ${CollectionItemButton}{
+            opacity: .8;
+            display: block;
+        }
+    }
 `;
 
 export const CollectionItemFigCaption = styled.figcaption`

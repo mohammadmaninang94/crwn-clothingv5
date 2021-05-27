@@ -8,7 +8,7 @@ import { selectUserSignUpMessage } from '../../redux/user/user.selectors';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
-import { SignUpContainer, SignUpTitle, SignUpParagraph } from './sign-up.styles';
+import { SignUpContainer, SignUpTitle, SignUpParagraph, SignUpButtonContainer } from './sign-up.styles';
 
 const SignUp = ({ signUp, errorMessage }) => {
     const [userCredentials, setUserCredentials] = useState({
@@ -68,9 +68,9 @@ const SignUp = ({ signUp, errorMessage }) => {
                     value={confirmPassword}
                     handleChange={handleChange}
                     required />
-                <div className='sign-in__buttons'>
+                <SignUpButtonContainer>
                     <CustomButton type='submit'>Sign up</CustomButton>
-                </div>
+                </SignUpButtonContainer>
                 <p>{errorMessage}</p>
             </form>
         </SignUpContainer>

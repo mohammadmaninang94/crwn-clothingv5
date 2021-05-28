@@ -9,7 +9,7 @@ export const CollectionPageTitle = styled.div`
 
 export const CollectionPageItems = styled.div`
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(22vw, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr));
     justify-content: center;
     column-gap: 2rem;
     row-gap: 2rem;

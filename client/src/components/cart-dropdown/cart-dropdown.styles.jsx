@@ -14,6 +14,11 @@ export const CartDropdownContainer = styled.div`
     z-index: 5;
 
     background-color: var(--color-white);
+
+    @media only screen and (max-width: 37.5em) {
+        right: 15px;
+        top: 70px;
+    }
 `;
 
 export const CartDropdownItems = styled.div`

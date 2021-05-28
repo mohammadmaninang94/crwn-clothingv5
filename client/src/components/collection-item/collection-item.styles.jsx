@@ -33,7 +33,7 @@ export const CollectionItemContainer = styled.figure`
         }
     }
 
-    @media only screen and (max-width: 37.5em) {
+    @media only screen and (max-width: 86em) {
         &:hover,
         &:active {
             ${CollectionItemImg}{

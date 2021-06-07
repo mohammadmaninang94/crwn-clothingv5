@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const CollectionPreviewContainer = styled.div`
     margin-bottom: 3rem;
+    cursor: pointer;
 `;
 
 export const CollectionPreviewTitle = styled.h2`

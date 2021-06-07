@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -6,14 +6,14 @@ import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from './redux/user/user.selectors';
 import { checkUserSession } from './redux/user/user.actions';
 
-import HomePage from './pages/home-page/home-page.component';
-import ShopPage from './pages/shop-page/shop-page.component';
-import SignInSignUpPage from './pages/sign-in-sign-up-page/sign-in-sign-up-page.component';
-import CheckoutPage from './pages/checkout-page/checkout-page.component';
-
 import Header from './components/header/header.component';
 
 import { AppContainer } from './App.styles';
+
+const HomePage = lazy(() => import('./pages/home-page/home-page.component'));
+const ShopPage = lazy(() => import('./pages/shop-page/shop-page.component'));
+const SignInSignUpPage = lazy(() => import('./pages/sign-in-sign-up-page/sign-in-sign-up-page.component'));
+const CheckoutPage = lazy(() => import('./pages/checkout-page/checkout-page.component'));
 
 const App = ({ checkUserSession, currentUser }) => {
   useEffect(() => {
@@ -24,16 +24,18 @@ const App = ({ checkUserSession, currentUser }) => {
     <AppContainer>
       <Header />
       <Switch>
-        <Route exact path='/' render={() => <HomePage />} />
-        <Route path='/shop' render={routeProps => <ShopPage {...routeProps} />} />
-        <Route exact path='/checkout' render={({ history }) => currentUser ? <CheckoutPage /> : history.push('/signin')} />
-        <Route path='/signin' render={() =>
-          currentUser ? (
-            <Redirect to='/' />
-          ) : (
-            <SignInSignUpPage />
-          )
-        } />
+        <Suspense fallback={<div>loading</div>}>
+          <Route exact path='/' render={() => <HomePage />} />
+          <Route path='/shop' render={routeProps => <ShopPage {...routeProps} />} />
+          <Route exact path='/checkout' render={({ history }) => currentUser ? <CheckoutPage /> : history.push('/signin')} />
+          <Route path='/signin' render={() =>
+            currentUser ? (
+              <Redirect to='/' />
+            ) : (
+              <SignInSignUpPage />
+            )
+          } />
+        </Suspense>
       </Switch>
     </AppContainer>
   );

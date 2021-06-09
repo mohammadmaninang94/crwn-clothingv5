@@ -9,7 +9,10 @@ const CollectionPreview = ({ title, routeName, items }) => {
     const location = useLocation();
     return (
         <CollectionPreviewContainer>
-            <CollectionPreviewTitle onClick={() => history.push(`${location.pathname}/${routeName}`)}>{title}</CollectionPreviewTitle>
+            <CollectionPreviewTitle
+                onClick={() => history.push(`${location.pathname}/${routeName}`)}>
+                {title}
+            </CollectionPreviewTitle>
             <CollectionPreviewItems>
                 {items.filter((item, index) => index < 4)
                     .map(item => (

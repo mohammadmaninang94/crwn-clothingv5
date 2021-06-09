@@ -7,6 +7,7 @@ import { selectCurrentUser } from './redux/user/user.selectors';
 import { checkUserSession } from './redux/user/user.actions';
 
 import Header from './components/header/header.component';
+import ErrorBoundary from './components/error-boundary/error-boundary.component';
 
 import { AppContainer } from './App.styles';
 
@@ -24,18 +25,20 @@ const App = ({ checkUserSession, currentUser }) => {
     <AppContainer>
       <Header />
       <Switch>
-        <Suspense fallback={<div>loading</div>}>
-          <Route exact path='/' render={() => <HomePage />} />
-          <Route path='/shop' render={routeProps => <ShopPage {...routeProps} />} />
-          <Route exact path='/checkout' render={({ history }) => currentUser ? <CheckoutPage /> : history.push('/signin')} />
-          <Route path='/signin' render={() =>
-            currentUser ? (
-              <Redirect to='/' />
-            ) : (
-              <SignInSignUpPage />
-            )
-          } />
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={<div>loading</div>}>
+            <Route exact path='/' render={() => <HomePage />} />
+            <Route path='/shop' render={routeProps => <ShopPage {...routeProps} />} />
+            <Route exact path='/checkout' render={({ history }) => currentUser ? <CheckoutPage /> : history.push('/signin')} />
+            <Route path='/signin' render={() =>
+              currentUser ? (
+                <Redirect to='/' />
+              ) : (
+                <SignInSignUpPage />
+              )
+            } />
+          </Suspense>
+        </ErrorBoundary>
       </Switch>
     </AppContainer>
   );

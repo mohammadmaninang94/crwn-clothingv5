@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 
 import { fetchCollectionsStart } from '../../redux/shop/shop.actions';
 
+import Spinner from '../../components/spinner/spinner.component';
+
 const CollectionPageContainer = lazy(() => import('../collection-page/collection-page.container'));
 const CollectionOveriewContainer = lazy(() => import('../../components/collections-overview/collections-overview.container'));
 
@@ -15,7 +17,7 @@ const ShopPage = ({ fetchCollectionsStart, match }) => {
 
     return (
         <Fragment>
-            <Suspense>
+            <Suspense fallback={<Spinner />}>
                 <Route exact path={match.path} render={() => {
                     return (
                         <div className='shop-page'>

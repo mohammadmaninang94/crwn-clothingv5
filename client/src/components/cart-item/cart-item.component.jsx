@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import { convertToPHPCurrency } from '../component.utils';
 
 import { CartItemContainer, CartItemImg, CartItemDetails } from './cart-item.styles';
@@ -12,4 +14,4 @@ const CartItem = ({ item: { name, imageUrl, price, quantity } }) => (
     </CartItemContainer>
 );
 
-export default CartItem;
+export default memo(CartItem);

@@ -33,6 +33,11 @@ const cartReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 items: []
             }
+        case cartActionTypes.SET_CART_FROM_FIREBASE:
+            return {
+                ...state,
+                items: action.payload
+            }
         default:
             return state;
     }

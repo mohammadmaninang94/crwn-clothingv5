@@ -22,7 +22,7 @@ export const firestore = firebase.firestore();
 export const createUserProfileDocument = async (userAuth, additionalData) => {
     if (!userAuth) return;
 
-    const userRef = firestore.doc(`users/${userAuth.uid}`); // queryReferece - documentReference
+    const userRef = firestore.doc(`users/${userAuth.user.uid}`); // queryReferece - documentReference
     const userSnapshot = await userRef.get(); // document snapshot
 
     if (!userSnapshot.exists) {
@@ -86,5 +86,25 @@ export const getCurrentUser = () => {
         }, reject);
     });
 }
+
+export const getUserCartRef = async userId => {
+    if (!userId) return null;
+
+    const cartsRef = firestore.collection('carts').where('userId', '==', userId); // queryReferece - documentReference
+    const cartSnapshot = await cartsRef.get(); // document snapshot
+
+    if (cartSnapshot.empty) {
+        try {
+            const cartDocRef = firestore.collection('carts').doc();
+            await cartDocRef.set({ userId, items: [] });
+            return cartDocRef;
+        } catch (error) {
+            console.log('error creating cart', error.mesasge);
+            return null;
+        }
+    }
+
+    return cartSnapshot.docs[0].ref;
+};
 
 export default firebase;

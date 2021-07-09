@@ -3,6 +3,7 @@ import { addItemToCart, removeItemFromCart, clearItemFormCart } from './cart.uti
 
 const INITIAL_STATE = {
     hidden: true,
+    sidebar: true,
     items: []
 };
 

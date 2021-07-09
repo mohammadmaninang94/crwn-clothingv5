@@ -6,6 +6,7 @@ export const HeaderContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    letter-spacing: .1em;
 
     @media only screen and (max-width: 37.5em) {
       height: 7rem;

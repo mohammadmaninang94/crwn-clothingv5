@@ -21,7 +21,9 @@ export function* setSnapshotfromUserAuth(userAuth, additionalData) {
 export function* signInWithGoogle() {
     try {
         const userAuth = yield auth.signInWithPopup(googleProvider);
-        yield call(setSnapshotfromUserAuth, userAuth);
+        if (userAuth) {
+            yield call(setSnapshotfromUserAuth, userAuth.user);
+        }
     } catch (error) {
         yield put(signInFailure(error.message));
     }
@@ -30,7 +32,9 @@ export function* signInWithGoogle() {
 export function* signInWithEmail({ payload: { email, password } }) {
     try {
         const userAuth = yield auth.signInWithEmailAndPassword(email, password);
-        yield call(setSnapshotfromUserAuth, userAuth);
+        if (userAuth) {
+            yield call(setSnapshotfromUserAuth, userAuth.user);
+        }
     } catch (error) {
         yield put(signInFailure(error.message));
     }

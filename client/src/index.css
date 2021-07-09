@@ -12,6 +12,18 @@ html {
   font-size: 62.5%;
 }
 
+@media only screen and (max-width: 37.5em) {
+  html {
+    font-size: 56.25%;
+  }
+}
+
+@media only screen and (max-width: 56.25em) {
+  html {
+    font-size: 50%;
+  }
+}
+
 body {
   margin: 0;
   font-family: "Open Sans Condensed", sans-serif;
@@ -32,4 +44,8 @@ body {
 
   --color-google: rgb(66, 133, 244);
   --color-google-dark: rgb(10, 72, 175);
+
+  --color-grey: #6a6a6a;
+
+  --font-nunito: "Nunito Sans";
 }

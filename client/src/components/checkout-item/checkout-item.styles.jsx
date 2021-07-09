@@ -56,5 +56,5 @@ export const CheckoutItemArrow = styled.button`
 `;
 
 export const CheckoutItemRemove= styled.button`
-${checkoutItemBtnStyles}
+    ${checkoutItemBtnStyles}
 `;

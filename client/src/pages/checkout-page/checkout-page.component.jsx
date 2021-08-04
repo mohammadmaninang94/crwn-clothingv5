@@ -4,22 +4,19 @@ import { createStructuredSelector } from 'reselect';
 
 import { selectCartItems, selectCartTotalPrice } from '../../redux/cart/cart.selectors';
 
-import CheckoutTable from '../../components/checkout-table/checkout-table.component';
-import StripeButton from '../../components/stripe-button/stripe-button.component';
+import CheckoutForm from '../../components/checkout-form/checkout-form.component';
+import CartTable from '../../components/cart-table/cart-table.component';
 
-import { CheckoutPageContainer, CheckoutPageEmpty, StripeButtonContainer } from './checkout-page.styles';
+// import CheckoutTable from '../../components/checkout-table/checkout-table.component';
+// import StripeButton from '../../components/stripe-button/stripe-button.component';
+
+// import { CheckoutPageContainer, CheckoutPageEmpty, StripeButtonContainer } from './checkout-page.styles';
 
 const CheckoutPage = ({ cartItems, cartTotalPrice }) => (
-    <CheckoutPageContainer>
-        {cartTotalPrice ? (
-            <Fragment>
-                <CheckoutTable cartItems={cartItems} cartTotalPrice={cartTotalPrice} />
-                <StripeButtonContainer>
-                    <StripeButton total={cartTotalPrice} />
-                </StripeButtonContainer>
-            </Fragment>
-        ) : <CheckoutPageEmpty>You cart is empty</CheckoutPageEmpty>}
-    </CheckoutPageContainer>
+    <Fragment>
+        <CheckoutForm />
+        <CartTable sidebar={true} />
+    </Fragment>
 );
 
 const mapStateToProps = createStructuredSelector({

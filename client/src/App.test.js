@@ -1,25 +1,40 @@
-import ReactDOM from 'react-dom';
 import AppContainer from './App.container';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
+import { MemoryRouter } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
-// it('App renders without crashing', () => {
-//   const div = document.createElement('div');
-//   ReactDOM.render(<AppContainer currentUser={null}/>, div);
-// });
+import HomePage from './pages/home-page/home-page.component';
 
 let appWithoutUser = null;
 let appWithUser = null;
+let pathMap = {};
 
-beforeEach(() => {
-    const currentUser = {};
-    appWithoutUser = shallow(<AppContainer currentUser={null} />);
-    appWithUser = shallow(<AppContainer currentUser={currentUser} />);
-});
+describe('Main Page', () => {
+    beforeAll(() => {
+        const currentUser = {};
+        appWithoutUser = shallow(<AppContainer currentUser={null} />);
+        appWithUser = shallow(<AppContainer currentUser={currentUser} />);
 
-it('renders AppContainer without crashing', () => {
-    expect(appWithoutUser).toMatchSnapshot();
-});
+        const component = shallow(<AppContainer currentUser={null}/>);
+        pathMap = component.find(Route).reduce((pathMap, route) => {
+            const routeProps = route.props();
+            console.log(routeProps.render());
+            pathMap[routeProps.path] = routeProps.component;
+            return pathMap;
+        }, {});
+        console.log(pathMap)
+    });
 
-it('renders AppContainer with currentUser', () => {
-    expect(appWithUser).toMatchSnapshot();
+    it('should show Home component for / router (getting array of routes)', () => {
+
+        expect(pathMap['/']).toBe(undefined);
+      })
+
+    it('renders AppContainer without currentUser', () => {
+        expect(appWithoutUser).toMatchSnapshot();
+    });
+
+    it('renders AppContainer with currentUser', () => {
+        expect(appWithUser).toMatchSnapshot();
+    });
 });

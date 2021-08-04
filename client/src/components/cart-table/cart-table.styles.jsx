@@ -21,7 +21,7 @@ export const CartTableContainer = styled.div`
     display: ${props => props.sidebar ? 'block' : 'table'}; 
     width: 100%;
     border-spacing: 0 30px;
-    height: 80vh;
+    height: 80vh; ;
     overflow:auto;
 `;
 

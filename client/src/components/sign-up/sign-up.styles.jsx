@@ -21,6 +21,7 @@ export const SignUpParagraph = styled.p`
 export const SignUpButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-top: 2rem;
 
   @media only screen and (max-width: 37.5em) {
     flex-direction: column;

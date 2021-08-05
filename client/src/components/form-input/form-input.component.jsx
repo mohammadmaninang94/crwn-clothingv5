@@ -1,4 +1,4 @@
-import {CustomInputContainer, CustomLabel, CustomInput} from './form-input.styles';
+import { CustomInputContainer, CustomLabel, CustomInput } from './form-input.styles';
 
 const FormInput = ({ handleChange, label, ...otherProps }) => (
     <CustomInputContainer>

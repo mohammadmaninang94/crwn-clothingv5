@@ -2,8 +2,11 @@ import styled from 'styled-components';
 
 export const CheckoutPageContainer = styled.div`
     min-height: 70vh;
-    width: 55%;
+    width: 60%;
     margin: 5rem auto 0;
+
+    display: flex;
+    justify-content: space-evenly;
 `;
 
 export const CheckoutPageEmpty = styled.h2`

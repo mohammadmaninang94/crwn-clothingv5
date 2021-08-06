@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import { CustomInputContainer } from '../form-input/form-input.styles';
 
@@ -36,7 +36,7 @@ export const CheckoutFormSlug = styled.ul`
 `;
 
 export const CheckoutFormSlugItem = styled.li`
-    &:after {
+    &:not(:last-child):after {
         content: ">";
         font-weight: bold;
         padding: 1rem;

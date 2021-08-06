@@ -1,9 +1,7 @@
 import { memo, Profiler } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 
 import { addItem, removeItem, clearItem } from '../../redux/cart/cart.actions';
-import {  selectCartSidebar } from '../../redux/cart/cart.selectors';
 
 import { convertToPHPCurrency } from '../component.utils';
 

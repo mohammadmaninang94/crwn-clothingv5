@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { CheckoutFormContainer } from '../../components/checkout-form/checkout-form.styles';
+
 export const CheckoutPageContainer = styled.div`
     min-height: 70vh;
     width: 60%;
@@ -7,6 +9,10 @@ export const CheckoutPageContainer = styled.div`
 
     display: flex;
     justify-content: space-evenly;
+
+    & ${CheckoutFormContainer} {
+        flex: 2 0 60%;
+    }
 `;
 
 export const CheckoutPageEmpty = styled.h2`

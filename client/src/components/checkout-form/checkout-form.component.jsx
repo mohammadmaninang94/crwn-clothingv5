@@ -43,7 +43,7 @@ const CheckoutForm = () => {
             <form>
                 <CheckoutFormFieldset>
                     <CheckoutFormLegend>Contact Information</CheckoutFormLegend>
-                    <FormInput label='Mobile Phone Number' type='text'
+                    <FormInput label='Mobile Phone Number' type='tel'
                         name='mobilePhoneNo' value={mobilePhoneNo}
                         handleChange={handleChange} required />
                 </CheckoutFormFieldset>
@@ -60,7 +60,7 @@ const CheckoutForm = () => {
                     </CustomInputWrapper>
                     <CustomInputWrapper>
                         <FormInput
-                            label='Email address' type='text'
+                            label='Email address' type='email'
                             name='shippingEmailAddress' value={shippingEmailAddress}
                             handleChange={handleChange} required />
                         <FormInput

@@ -1,60 +1,54 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-const checkoutItemBtnStyles = css`
-    font-size: inherit;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    color: var(--color-black-light);
-    outline: transparent;
-    transform: scale(1.1);
-    transition: all 0.1s ease-in;
+export const CheckoutItemContainer = styled.div`
+    margin-bottom: 2rem;
+    font-size: 1.6rem;
 
-    &:hover,
-    &:active {
-    color: var(--color-black);
-    outline: transparent;
-    }
-
-    &:active {
-    transform: scale(1);
-    }
-`;
-
-export const CheckoutItemContainer = styled.tr`
-    & td:first-of-type {
-        width: 45%;
-    }
-
-    & td:last-of-type {
-        width: 5%;
-    }
-
-    & td:not(:first-of-type) {
-        text-align: center;
-    }
-`;
-
-export const CheckoutItemProduct = styled.figure`
     display: flex;
+    justify-content: space-between;
     align-items: center;
     gap: 2rem;
 `;
 
+export const CheckoutItemfigure = styled.figure`
+    display: flex;
+    align-items: center;
+    gap: 1.5rem; 
+    position: relative;
+`;
+
 export const CheckoutItemImg = styled.img`
-    height: 100%;
-    width: 30%;
-    margin: 2rem 0;
+    width: 7rem;
+    height: 7rem;
+    object-fit: cover;
+    margin-right: 0.2rem;
+    border-radius: 5%;
+`;
+
+export const CheckoutItemFigcaption = styled.figcaption`
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 export const CheckoutItemQty = styled.span`
-    margin: 0 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-white);
+    background-color: var(--color-black-light);
+    text-align: center;
+    position: absolute;
+    top: -8px;
+    left: 58px;
 `;
 
-export const CheckoutItemArrow = styled.button`
-    ${checkoutItemBtnStyles}
-`;
+export const CheckoutItemPriceTotal = styled.span`
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
-export const CheckoutItemRemove= styled.button`
-    ${checkoutItemBtnStyles}
+    flex: 0 2 auto;
 `;

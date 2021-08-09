@@ -32,7 +32,7 @@ export const CustomInput = styled.input`
     background-color: var(--color-white);
     border: 1px solid var(--color-black-lighter);
     border-radius: 5px;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     transition: all 300ms ease;
 
     &:focus {

@@ -1,11 +1,13 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom'
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from './../custom-button/custom-button.component';
 
 import {
     CheckoutFormContainer, CheckoutFormFieldset, CheckoutFormLegend,
-    CustomInputWrapper, CheckoutFormSlug, CheckoutFormSlugItem
+    CustomInputWrapper, CheckoutFormSlug, CheckoutFormSlugItem,
+    CheckoutFormButtonContainer, CheckoutBackButton, BackArrow
 } from './checkout-form.styles';
 
 
@@ -22,6 +24,8 @@ const CheckoutForm = () => {
         shippingRegion: '',
         shippingMobileNo: ''
     });
+
+    const history = useHistory();
 
     const handleChange = event => {
         const { name, value } = event.target;
@@ -91,7 +95,12 @@ const CheckoutForm = () => {
                             handleChange={handleChange} required />
                     </CustomInputWrapper>
                 </CheckoutFormFieldset>
-                <CustomButton >Continue to shipping</CustomButton>
+                <CheckoutFormButtonContainer>
+                    <CheckoutBackButton isLink={true} onClick={() => {
+                        history.push('/cart');
+                    }}><BackArrow>&larr;</BackArrow>Back to Cart</CheckoutBackButton>
+                    <CustomButton>Continue to shipping</CustomButton>
+                </CheckoutFormButtonContainer>
             </form>
         </CheckoutFormContainer>
     )

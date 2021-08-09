@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { CustomInputContainer } from '../form-input/form-input.styles';
+import CustomButton from './../custom-button/custom-button.component';
 
 export const CheckoutFormContainer = styled.div`
     width: 100%;
@@ -40,7 +41,29 @@ export const CheckoutFormSlugItem = styled.li`
         content: ">";
         font-weight: bold;
         padding: 1rem;
-        color: ${props => props.isActive ? 
-            'var(--color-black-light)' : 'var(--color-black-lighter)' };
+        color: ${props => props.isActive ?
+        'var(--color-black-light)' : 'var(--color-black-lighter)'};
     }
 `;
+
+export const CheckoutFormButtonContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+`;
+
+export const BackArrow = styled.span`
+    padding-left: 5px;
+    padding-right: 5px;
+    transition: all 0.1s ease-in;
+`;
+
+export const CheckoutBackButton = styled(CustomButton)`
+    padding: 0;
+    min-width: 0;
+
+    &:hover ${BackArrow}{
+        padding-left: 0;
+        padding-right: 10px;
+    }
+`;
+

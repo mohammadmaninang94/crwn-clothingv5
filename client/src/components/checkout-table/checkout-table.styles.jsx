@@ -24,10 +24,6 @@ export const CheckoutBreakdownTotal = styled.b`
     font-size: 1.6rem;
 `;
 
-export const CheckoutTotalText = styled.span`
-    font-size: 2rem;
-`;
-
 export const CheckoutTotalPrice = styled.h2`
     font-size: 2rem;
 `;

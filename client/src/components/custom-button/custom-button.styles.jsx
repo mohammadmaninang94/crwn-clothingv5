@@ -38,11 +38,20 @@ const googleStyles = css`
     }
 `;
 
+const linkStyles = css`
+    color: var(--color-black);  
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+`;
+
 const getCustomStyles = props => {
     if (props.isGoogle) {
         return googleStyles;
     } else if (props.isInverted) {
         return invertedStyles;
+    } else if (props.isLink) {
+        return linkStyles;
     } else {
         return defaultStyles;
     }

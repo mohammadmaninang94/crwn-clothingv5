@@ -41,7 +41,7 @@ const CartTable = ({ cartItems, cartTotalPrice, sidebar, history, toggelCartHidd
                 <CartCheckoutMessage>Shipping & taxes calculated at checkout</CartCheckoutMessage>
                 <CartCheckoutButton sidebar={sidebar} onClick={() => {
                     history.push('/checkout');
-                    toggelCartHidden();
+                    toggelCartHidden(true);
                 }}>Checkout</CartCheckoutButton>
             </CartFooterCell>
         </CartFooter>
@@ -54,7 +54,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-    toggelCartHidden: () => dispatch(toggleCartHidden())
+    toggelCartHidden: toggle => dispatch(toggleCartHidden(toggle))
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CartTable));

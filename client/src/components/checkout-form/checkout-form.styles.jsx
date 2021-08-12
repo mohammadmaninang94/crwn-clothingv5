@@ -6,6 +6,7 @@ import CustomButton from './../custom-button/custom-button.component';
 export const CheckoutFormContainer = styled.div`
     width: 100%;
     font-size: 1.6rem; 
+    letter-spacing: .2rem;
 `;
 
 export const CheckoutFormWrapper = styled.div`
@@ -14,7 +15,20 @@ export const CheckoutFormWrapper = styled.div`
 
 export const CheckoutFormFieldset = styled.fieldset`
     border: none;
-    margin-bottom: 2rem;
+    visibility: hidden;
+    max-height: 0;
+    height: 0;
+    opacity: 0;
+    transition: max-height .2s, visibility .5s, opacity .3s;
+    padding: 0;
+    margin: 0;
+    line-height: 0;
+
+    &.show {
+        max-height: 100%;
+        opacity: 100;
+        visibility: visible
+    }
 `;
 
 export const CheckoutFormLegend = styled.legend`
@@ -45,7 +59,7 @@ export const CheckoutFormSlug = styled.ul`
 
     @media only screen and (max-width: 37.5em) {
         justify-content: space-around;
-        margin: 2rem 2rem 3rem 2rem;
+        margin: 1rem 1.5rem 3rem 1.5rem;
     }
 `;
 
@@ -63,6 +77,7 @@ export const CheckoutFormSlugItem = styled.li`
 export const CheckoutFormButtonContainer = styled.div`
     display: flex;
     justify-content: space-between;
+    margin: 2rem 0;   
 
     @media only screen and (max-width: 37.5em) {
         flex-direction: column-reverse;
@@ -78,6 +93,7 @@ export const BackArrow = styled.span`
 
 export const CheckoutBackButton = styled(CustomButton)`
     min-width: 0;
+    padding: 0;
 
     &:hover ${BackArrow}{
         padding-left: 0;

@@ -14,37 +14,42 @@ import {
     CartTableContainer, CartHeader, CartHeaderCell,
     CartFooter, CartFooterCell, CartTotalContainer,
     CartTotalTitle, CartTotalPrice, CartCheckoutMessage,
-    CartCheckoutButton
+    CartCheckoutButton, CartEmptyMessage
 } from './cart-table.styles';
 
 const CartTable = ({ cartItems, cartTotalPrice, sidebar, history, toggelCartHidden }) => (
     <Fragment>
-        <CartTableContainer sidebar={sidebar}>
-            <CartHeader sidebar={sidebar}>
-                <CartHeaderCell textAlign='left'>Product</CartHeaderCell>
-                <CartHeaderCell>Price</CartHeaderCell>
-                <CartHeaderCell>Quantity</CartHeaderCell>
-                <CartHeaderCell textAlign='right'>Total</CartHeaderCell>
-            </CartHeader>
-            {cartItems.length ?
-                cartItems.map(item => (
-                    <CartItem sidebar={sidebar} key={item.id} item={item} />
-                )) : null
-            }
-        </CartTableContainer>
-        <CartFooter sidebar={sidebar}>
-            <CartFooterCell textAlign='right'>
-                <CartTotalContainer>
-                    <CartTotalTitle>Total:</CartTotalTitle>
-                    <CartTotalPrice>{convertToPHPCurrency(cartTotalPrice)}</CartTotalPrice>
-                </CartTotalContainer>
-                <CartCheckoutMessage>Shipping & taxes calculated at checkout</CartCheckoutMessage>
-                <CartCheckoutButton sidebar={sidebar} onClick={() => {
-                    history.push('/checkout');
-                    toggelCartHidden(true);
-                }}>Checkout</CartCheckoutButton>
-            </CartFooterCell>
-        </CartFooter>
+        {
+            cartItems.length ?
+                <Fragment>
+                    <CartTableContainer sidebar={sidebar}>
+                        <CartHeader sidebar={sidebar}>
+                            <CartHeaderCell textAlign='left'>Product</CartHeaderCell>
+                            <CartHeaderCell>Price</CartHeaderCell>
+                            <CartHeaderCell>Quantity</CartHeaderCell>
+                            <CartHeaderCell textAlign='right'>Total</CartHeaderCell>
+                        </CartHeader>
+                        {cartItems.map(item => (
+                            <CartItem sidebar={sidebar} key={item.id} item={item} />
+                        ))}
+                    </CartTableContainer>
+                    <CartFooter sidebar={sidebar}>
+                        <CartFooterCell textAlign='right'>
+                            <CartTotalContainer>
+                                <CartTotalTitle>Total:</CartTotalTitle>
+                                <CartTotalPrice>{convertToPHPCurrency(cartTotalPrice)}</CartTotalPrice>
+                            </CartTotalContainer>
+                            <CartCheckoutMessage>Shipping & taxes calculated at checkout</CartCheckoutMessage>
+                            <CartCheckoutButton sidebar={sidebar} onClick={() => {
+                                history.push('/checkout');
+                                toggelCartHidden(true);
+                            }}>Checkout</CartCheckoutButton>
+                        </CartFooterCell>
+                    </CartFooter>
+                </Fragment>
+                :
+                <CartEmptyMessage>Cart is empty</CartEmptyMessage>
+        }
     </Fragment>
 );
 

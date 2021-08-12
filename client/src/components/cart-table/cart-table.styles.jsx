@@ -21,8 +21,12 @@ export const CartTableContainer = styled.div`
     display: ${props => props.sidebar ? 'block' : 'table'}; 
     width: 100%;
     border-spacing: 0 30px;
-    height: 80vh; ;
-    overflow:auto;
+    overflow: auto;
+    flex-grow: 1;
+
+    @media only screen and (max-width: 37.5em) {
+        padding: 0 2rem;
+    } 
 `;
 
 export const CartHeader = styled.div`
@@ -53,6 +57,10 @@ export const CartFooter = styled.div`
 
 export const CartFooterCell = styled.div`
     text-align: ${props => props.textAlign ? props.textAlign : 'center'};
+
+    @media only screen and (max-width: 37.5em) {
+        padding: 0 2rem;
+    } 
 `;
 
 export const CartTotalContainer = styled.div``;
@@ -71,7 +79,7 @@ export const CartCheckoutMessage = styled.p`
 `;
 
 export const CartCheckoutButton = styled(CustomButton)`
-    letter-spacing: .2rem;
+    letter-spacing: inherit;
 
     ${props => props.sidebar ?
         `width: 100%;` : ''
@@ -85,6 +93,11 @@ export const CartCheckoutButton = styled(CustomButton)`
 export const CartPageEmpty = styled.p`
     font-size: 3rem;
     font-weight: normal;
+    margin: auto;
+    width: fit-content;
+`;
+
+export const CartEmptyMessage = styled.p`
     margin: auto;
     width: fit-content;
 `;

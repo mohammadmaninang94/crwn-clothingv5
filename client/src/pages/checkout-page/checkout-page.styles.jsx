@@ -9,7 +9,7 @@ export const CheckoutPageContainer = styled.div`
     margin: 5rem auto 0;
 
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-start;
 
     & ${CheckoutFormContainer} {
         flex: 2 0 60%;

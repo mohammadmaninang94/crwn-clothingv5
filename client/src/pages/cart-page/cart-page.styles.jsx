@@ -13,6 +13,31 @@ export const CartPageContainer = styled.div`
     }   
 
     @media only screen and (max-width: 37.5em) {
-        width: 80vw;
+        width: 100vw;
     }   
+`;
+
+export const CartFormSlug = styled.ul`
+    display:flex;
+    justify-content: center;
+    font-size: 1.6rem;
+    text-transform: none;
+    list-style: none;
+    margin-bottom: 5rem;
+
+    @media only screen and (max-width: 37.5em) {
+        justify-content: space-around;
+        margin: 1rem 1.5rem;
+    }
+`;
+
+export const CartFormSlugItem = styled.li`
+    color: ${props => props.isActive ?
+        'var(--color-black-light)' : 'var(--color-black-lighter)'};
+
+    &:not(:last-child):after {
+        content: ">";
+        font-weight: bold;
+        padding: 1rem;
+    }
 `;

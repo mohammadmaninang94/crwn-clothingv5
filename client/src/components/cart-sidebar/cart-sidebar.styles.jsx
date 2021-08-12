@@ -23,7 +23,7 @@ export const CartSidebarContainer = styled.div`
     background-color: var(--color-white);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding: 2rem;
     font-size: 1.6rem;
     letter-spacing: .1em;

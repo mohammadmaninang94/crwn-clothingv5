@@ -25,6 +25,8 @@ const CheckoutForm = () => {
         shippingMobileNo: ''
     });
 
+    const [step, setStep] = useState(2);
+
     const history = useHistory();
 
     const handleChange = event => {
@@ -40,19 +42,12 @@ const CheckoutForm = () => {
         <CheckoutFormContainer>
             <CheckoutFormSlug>
                 <CheckoutFormSlugItem isActive={true}>Cart</CheckoutFormSlugItem>
-                <CheckoutFormSlugItem isActive={true}>Information</CheckoutFormSlugItem>
-                <CheckoutFormSlugItem>Shipping Method</CheckoutFormSlugItem>
-                <CheckoutFormSlugItem>Payment Method</CheckoutFormSlugItem>
+                <CheckoutFormSlugItem isActive={true}>Shipping Information</CheckoutFormSlugItem>
+                <CheckoutFormSlugItem isActive={step === 3 ? true : false}>Payment Method</CheckoutFormSlugItem>
             </CheckoutFormSlug>
             <CheckoutFormWrapper>
                 <form>
-                    <CheckoutFormFieldset>
-                        <CheckoutFormLegend>Contact Information</CheckoutFormLegend>
-                        <FormInput label='Mobile Phone Number' type='tel'
-                            name='mobilePhoneNo' value={mobilePhoneNo}
-                            handleChange={handleChange} required />
-                    </CheckoutFormFieldset>
-                    <CheckoutFormFieldset>
+                    <CheckoutFormFieldset className={step === 2 ? 'show' : 'hide'}>
                         <CheckoutFormLegend>Shipping address</CheckoutFormLegend>
                         <CustomInputWrapper>
                             <FormInput label='First Name' type='text'
@@ -95,16 +90,30 @@ const CheckoutForm = () => {
                                 name='shippingRegion' value={shippingRegion}
                                 handleChange={handleChange} required />
                         </CustomInputWrapper>
+                        <CheckoutFormButtonContainer>
+                            <CheckoutBackButton type="button" isLink={true} onClick={() => {
+                                history.push('/cart');
+                            }}><BackArrow>&larr;</BackArrow>Back to Cart</CheckoutBackButton>
+                            <CustomButton type="button" onClick={() => {
+                                setStep(3);
+                            }}>Continue to payment</CustomButton>
+                        </CheckoutFormButtonContainer>
                     </CheckoutFormFieldset>
-                    <CheckoutFormButtonContainer>
-                        <CheckoutBackButton isLink={true} onClick={() => {
-                            history.push('/cart');
-                        }}><BackArrow>&larr;</BackArrow>Back to Cart</CheckoutBackButton>
-                        <CustomButton>Continue to shipping</CustomButton>
-                    </CheckoutFormButtonContainer>
+                    <CheckoutFormFieldset className={step === 3 ? 'show' : 'hide'}>
+                        <CheckoutFormLegend>Contact Information</CheckoutFormLegend>
+                        <FormInput label='Mobile Phone Number' type='tel'
+                            name='mobilePhoneNo' value={mobilePhoneNo}
+                            handleChange={handleChange} required />
+                        <CheckoutFormButtonContainer>
+                            <CheckoutBackButton type="button" isLink={true} onClick={() => {
+                                setStep(2);
+                            }}><BackArrow>&larr;</BackArrow>Back to Shipping</CheckoutBackButton>
+                            <CustomButton type="submit">Place Order</CustomButton>
+                        </CheckoutFormButtonContainer>
+                    </CheckoutFormFieldset>
                 </form>
             </CheckoutFormWrapper>
-        </CheckoutFormContainer>
+        </CheckoutFormContainer >
     )
 };
 

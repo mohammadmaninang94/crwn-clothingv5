@@ -66,7 +66,7 @@ export const ButtonContainer = styled.button`
     font-size: 1.5rem;
     font-weight: 700;
     font-family: inherit;
-    letter-spacing: 0.5px;
+    letter-spacing: inherit;
     text-transform: uppercase;
     box-shadow: 0 1rem 2rem rgba(var(--color-black-rgb), 0.2);
     transition: all 0.1s ease-in;

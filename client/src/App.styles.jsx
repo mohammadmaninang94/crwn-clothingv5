@@ -6,5 +6,9 @@ export const AppWrapper = styled.div`
   @media only screen and (max-width: 56.25em) {
     margin: 1.5rem;
   }
+
+  @media only screen and (max-width: 37.5em) {
+    margin: 0;
+  }
 `;
 

@@ -6,9 +6,6 @@ import { selectCartItems, selectCartTotalPrice } from '../../redux/cart/cart.sel
 import CheckoutForm from '../../components/checkout-form/checkout-form.component';
 import CheckoutTable from '../../components/checkout-table/checkout-table.component';
 
-// import CheckoutTable from '../../components/checkout-table/checkout-table.component';
-// import StripeButton from '../../components/stripe-button/stripe-button.component';
-
 import { CheckoutPageContainer } from './checkout-page.styles';
 
 const CheckoutPage = ({ cartItems, cartTotalPrice }) => (

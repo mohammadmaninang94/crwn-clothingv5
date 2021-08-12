@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const CheckoutItemContainer = styled.div`
-    margin-bottom: 2rem;
     font-size: 1.6rem;
+    margin-bottom: 2rem;
 
     display: flex;
     justify-content: space-between;
@@ -43,6 +43,11 @@ export const CheckoutItemQty = styled.span`
     position: absolute;
     top: -8px;
     left: 58px;
+
+    @media only screen and (max-width: 37.5em) {
+        top: -7px;
+        left: 55px;
+    }
 `;
 
 export const CheckoutItemPriceTotal = styled.span`

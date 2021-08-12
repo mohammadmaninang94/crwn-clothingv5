@@ -2,6 +2,8 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { useLocation } from 'react-router-dom';
 
+import pageRoutes from '../../assests/data/route.data';
+
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { signOutStart } from '../../redux/user/user.actions';
 
@@ -13,6 +15,7 @@ import { HeaderContainer, LogoContainer, NavContainer, HeaderLink } from './head
 
 const Header = ({ currentUser, signOut }) => {
     const location = useLocation();
+    const { CHECKOUT, CART } = pageRoutes;
     return (
         <HeaderContainer>
             <LogoContainer activeClassName='header__link--active' exact to='/'>
@@ -26,7 +29,7 @@ const Header = ({ currentUser, signOut }) => {
                     :
                     <HeaderLink activeClassName='header__link--active' to='/signin'>sign in</HeaderLink>
                 }
-                {location.pathname === '/checkout' ?
+                {location.pathname === CHECKOUT || location.pathname === CART ?
                     null : <CartIcon />
                 }
 

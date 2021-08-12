@@ -9,5 +9,6 @@ export const DirectoryContainer = styled.div`
     @media only screen and (max-width: 37.5em) {
         grid-template-rows: 25vh;
         grid-auto-rows: 25vh;
+        padding: 0 2rem;
     }
 `;

@@ -12,15 +12,9 @@ html {
   font-size: 62.5%;
 }
 
-@media only screen and (max-width: 37.5em) {
-  html {
-    font-size: 56.25%;
-  }
-}
-
 @media only screen and (max-width: 56.25em) {
   html {
-    font-size: 50%;
+    font-size: 60%;
   }
 }
 
@@ -47,6 +41,8 @@ body {
   --color-google-dark: rgb(10, 72, 175);
 
   --color-grey: #6a6a6a;
+  --color-grey-light: rgb(237, 237, 237);
+  --color-grey-lighter: rgb(250, 250, 250);
 
   --font-nunito: "Nunito Sans";
 }

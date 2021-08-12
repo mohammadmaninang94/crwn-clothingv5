@@ -8,5 +8,6 @@ export const SignInSignUpPageContainer = styled.div`
     @media only screen and (max-width: 37.5em) {
       flex-direction: column;
       gap: 5rem;
+      padding: 2rem;
   }
 `;

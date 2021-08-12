@@ -10,6 +10,7 @@ export const HeaderContainer = styled.div`
 
     @media only screen and (max-width: 37.5em) {
       height: 7rem;
+      margin: 1rem;
     }
 `;
 

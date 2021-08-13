@@ -26,7 +26,6 @@ export const CartFormSlug = styled.ul`
     margin-bottom: 5rem;
 
     @media only screen and (max-width: 37.5em) {
-        justify-content: space-around;
         margin: 1rem 1.5rem;
     }
 `;
@@ -41,3 +40,4 @@ export const CartFormSlugItem = styled.li`
         padding: 1rem;
     }
 `;
+

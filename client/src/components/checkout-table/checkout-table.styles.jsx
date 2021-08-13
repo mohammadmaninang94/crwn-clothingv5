@@ -18,7 +18,7 @@ const moveInRight = keyframes`
 
 export const CheckoutTableContainer = styled.div`
     width: 100%;
-    padding: 2rem 5rem;
+    padding: 0 5rem;
     animation-name: ${moveInRight};
     animation-duration: 1s;
     animation-timing-function: ease-out;
@@ -26,7 +26,8 @@ export const CheckoutTableContainer = styled.div`
     font-size: 1.6rem;
     letter-spacing: .2rem;
 
-    @media only screen and (max-width: 37.5em) {
+    @media only screen and (max-width: 56.25em),
+    only screen and (max-width: 37.5em) {
         animation: none;
     }
 
@@ -65,7 +66,8 @@ export const CheckoutTotalPrice = styled.h2`
 export const CheckoutSummaryContainer = styled.div`
     display: none;
 
-    @media only screen and (max-width: 37.5em) {
+    @media only screen and (max-width: 56.25em),
+    only screen and (max-width: 37.5em) {
         display: flex;
         justify-content: space-between;
         background-color: var(--color-grey-lighter);
@@ -103,7 +105,8 @@ export const FaIcon = styled(FontAwesomeIcon)`
 `;
 
 export const CheckoutSummaryItemContainer = styled.div`
-    @media only screen and (max-width: 37.5em) {
+    @media only screen and (max-width: 56.25em),
+    only screen and (max-width: 37.5em) {
         visibility: hidden;
         max-height: 0;
         opacity: 0;
@@ -116,7 +119,7 @@ export const CheckoutSummaryItemContainer = styled.div`
         &.show {
             max-height: 100%;
             opacity: 100;
-            visibility: visible
+            visibility: visible;
         }
     }
 `;

@@ -6,23 +6,21 @@ import CustomButton from './../custom-button/custom-button.component';
 
 import {
     CheckoutFormContainer, CheckoutFormFieldset, CheckoutFormLegend,
-    CustomInputWrapper, CheckoutFormSlug, CheckoutFormSlugItem,
-    CheckoutFormButtonContainer, CheckoutBackButton, BackArrow, CheckoutFormWrapper
+    CustomInputWrapper, CheckoutFormSlug, CheckoutFormSlugItem, FormInputContainer,
+    CheckoutFormButtonContainer, CheckoutBackButton, BackArrow, CheckoutFormWrapper,
+    PaymentTypeContainer, CheckoutFormFieldsetContiner
 } from './checkout-form.styles';
 
 
 const CheckoutForm = () => {
     const [checkout, setCheckout] = useState({
-        mobilePhoneNo: '',
-        shippingFirstName: '',
-        shippingLastName: '',
-        shippingAddress1: '',
-        shippingAddress2: '',
-        shippingProvince: '',
-        shippingZipCode: '',
-        shippingEmailAddress: '',
-        shippingRegion: '',
-        shippingMobileNo: ''
+        shippingFirstName: '', shippingLastName: '', shippingAddress1: '',
+        shippingAddress2: '', shippingProvince: '', shippingZipCode: '',
+        shippingEmailAddress: '', shippingRegion: '', shippingMobileNo: '',
+        billingFirstName: '', billingLastName: '', billingAddress1: '',
+        billingAddress2: '', billingProvince: '', billingZipCode: '',
+        billingEmailAddress: '', billingRegion: '', billingMobileNo: '',
+        paymentType: 'COD'
     });
 
     const [step, setStep] = useState(2);
@@ -34,62 +32,69 @@ const CheckoutForm = () => {
         setCheckout({ ...checkout, [name]: value });
     };
 
-    const { mobilePhoneNo, shippingFirstName, shippingLastName,
-        shippingAddress1, shippingAddress2, shippingProvince, shippingEmailAddress,
-        shippingZipCode, shippingRegion, shippingMobileNo } = checkout;
+    const {
+        shippingFirstName, shippingLastName, shippingAddress1,
+        shippingAddress2, shippingProvince, shippingEmailAddress,
+        shippingZipCode, shippingRegion, shippingMobileNo,
+        billingFirstName, billingLastName, billingAddress1,
+        billingAddress2, billingProvince, billingEmailAddress,
+        billingZipCode, billingRegion, billingMobileNo, paymentType
+    } = checkout;
 
     return (
         <CheckoutFormContainer>
             <CheckoutFormSlug>
                 <CheckoutFormSlugItem isActive={true}>Cart</CheckoutFormSlugItem>
-                <CheckoutFormSlugItem isActive={true}>Shipping Information</CheckoutFormSlugItem>
-                <CheckoutFormSlugItem isActive={step === 3 ? true : false}>Payment Method</CheckoutFormSlugItem>
+                <CheckoutFormSlugItem isActive={true}>Shipping</CheckoutFormSlugItem>
+                <CheckoutFormSlugItem isActive={step === 3 ? true : false}>Payment</CheckoutFormSlugItem>
             </CheckoutFormSlug>
             <CheckoutFormWrapper>
                 <form>
                     <CheckoutFormFieldset className={step === 2 ? 'show' : 'hide'}>
                         <CheckoutFormLegend>Shipping address</CheckoutFormLegend>
-                        <CustomInputWrapper>
-                            <FormInput label='First Name' type='text'
-                                name='shippingFirstName' value={shippingFirstName}
+                        <FormInputContainer>
+                            <CustomInputWrapper>
+                                <FormInput label='First Name' type='text'
+                                    name='shippingFirstName' value={shippingFirstName}
+                                    handleChange={handleChange} required />
+                                <FormInput
+                                    label='Last Name' type='text'
+                                    name='shippingLastName' value={shippingLastName}
+                                    handleChange={handleChange} required />
+                            </CustomInputWrapper>
+                            <CustomInputWrapper>
+                                <FormInput
+                                    label='Email address' type='email'
+                                    name='shippingEmailAddress' value={shippingEmailAddress}
+                                    handleChange={handleChange} required />
+                                <FormInput
+                                    label='Mobile Number' type='text'
+                                    name='shippingMobileNo' value={shippingMobileNo}
+                                    handleChange={handleChange} required />
+                            </CustomInputWrapper>
+                            <FormInput
+                                label='Unit/House No. & Street Name' type='text'
+                                name='shippingAddress1' value={shippingAddress1}
                                 handleChange={handleChange} required />
                             <FormInput
-                                label='Last Name' type='text'
-                                name='shippingLastName' value={shippingLastName}
+                                label='Barangay, City and Municipality' type='text'
+                                name='shippingAddress2' value={shippingAddress2}
                                 handleChange={handleChange} required />
-                        </CustomInputWrapper>
-                        <CustomInputWrapper>
-                            <FormInput
-                                label='Email address' type='email'
-                                name='shippingEmailAddress' value={shippingEmailAddress}
-                                handleChange={handleChange} required />
-                            <FormInput
-                                label='Mobile Number' type='text'
-                                name='shippingMobileNo' value={shippingMobileNo}
-                                handleChange={handleChange} required />
-                        </CustomInputWrapper>
-                        <FormInput
-                            label='Unit/House No. & Street Name' type='text'
-                            name='shippingAddress1' value={shippingAddress1}
-                            handleChange={handleChange} required />
-                        <FormInput
-                            label='Barangay, City and Municipality' type='text'
-                            name='shippingAddress2' value={shippingAddress2}
-                            handleChange={handleChange} required />
-                        <CustomInputWrapper>
-                            <FormInput
-                                label='Province' type='text'
-                                name='shippingProvince' value={shippingProvince}
-                                handleChange={handleChange} required />
-                            <FormInput
-                                label='Zip Code' type='text'
-                                name='shippingZipCode' value={shippingZipCode}
-                                handleChange={handleChange} required />
-                            <FormInput
-                                label='Region' type='text'
-                                name='shippingRegion' value={shippingRegion}
-                                handleChange={handleChange} required />
-                        </CustomInputWrapper>
+                            <CustomInputWrapper>
+                                <FormInput
+                                    label='Province' type='text'
+                                    name='shippingProvince' value={shippingProvince}
+                                    handleChange={handleChange} required />
+                                <FormInput
+                                    label='Zip Code' type='text'
+                                    name='shippingZipCode' value={shippingZipCode}
+                                    handleChange={handleChange} required />
+                                <FormInput
+                                    label='Region' type='text'
+                                    name='shippingRegion' value={shippingRegion}
+                                    handleChange={handleChange} required />
+                            </CustomInputWrapper>
+                        </FormInputContainer>
                         <CheckoutFormButtonContainer>
                             <CheckoutBackButton type="button" isLink={true} onClick={() => {
                                 history.push('/cart');
@@ -99,21 +104,80 @@ const CheckoutForm = () => {
                             }}>Continue to payment</CustomButton>
                         </CheckoutFormButtonContainer>
                     </CheckoutFormFieldset>
-                    <CheckoutFormFieldset className={step === 3 ? 'show' : 'hide'}>
-                        <CheckoutFormLegend>Contact Information</CheckoutFormLegend>
-                        <FormInput label='Mobile Phone Number' type='tel'
-                            name='mobilePhoneNo' value={mobilePhoneNo}
-                            handleChange={handleChange} required />
-                        <CheckoutFormButtonContainer>
+                    <CheckoutFormFieldsetContiner className={step === 3 ? 'show' : 'hide'}>
+                        <CheckoutFormFieldset className={step === 3 ? 'show' : 'hide'}>
+                            <CheckoutFormLegend>Payment Type</CheckoutFormLegend>
+                            <PaymentTypeContainer>
+                                <FormInput label='Cash on delivery' type='radio'
+                                    name='paymentType' value='COD' checked={paymentType === 'COD' ? "checked" : ""}
+                                    handleChange={handleChange} required />
+                                <FormInput label='Gcash' type='radio'
+                                    name='paymentType' value='GCash'
+                                    handleChange={handleChange} required />
+                                <FormInput label='GrabPay' type='radio'
+                                    name='paymentType' value='GrabPay'
+                                    handleChange={handleChange} required />
+                                <FormInput label='Credit/Debit Card' type='radio'
+                                    name='paymentType' value='CreditCard'
+                                    handleChange={handleChange} required />
+                            </PaymentTypeContainer>
+                        </CheckoutFormFieldset>
+                        <CheckoutFormFieldset className={paymentType === 'COD' ? "hide" : "show"}>
+                            <CheckoutFormLegend>Billing address</CheckoutFormLegend>
+                            <FormInputContainer>
+                                <CustomInputWrapper>
+                                    <FormInput label='First Name' type='text'
+                                        name='billingFirstName' value={billingFirstName}
+                                        handleChange={handleChange} required />
+                                    <FormInput
+                                        label='Last Name' type='text'
+                                        name='billingLastName' value={billingLastName}
+                                        handleChange={handleChange} required />
+                                </CustomInputWrapper>
+                                <CustomInputWrapper>
+                                    <FormInput
+                                        label='Email address' type='email'
+                                        name='billingEmailAddress' value={billingEmailAddress}
+                                        handleChange={handleChange} required />
+                                    <FormInput
+                                        label='Mobile Number' type='text'
+                                        name='billingMobileNo' value={billingMobileNo}
+                                        handleChange={handleChange} required />
+                                </CustomInputWrapper>
+                                <FormInput
+                                    label='Unit/House No. & Street Name' type='text'
+                                    name='billingAddress1' value={billingAddress1}
+                                    handleChange={handleChange} required />
+                                <FormInput
+                                    label='Barangay, City and Municipality' type='text'
+                                    name='billingAddress2' value={billingAddress2}
+                                    handleChange={handleChange} required />
+                                <CustomInputWrapper>
+                                    <FormInput
+                                        label='Province' type='text'
+                                        name='billingProvince' value={billingProvince}
+                                        handleChange={handleChange} required />
+                                    <FormInput
+                                        label='Zip Code' type='text'
+                                        name='billingZipCode' value={billingZipCode}
+                                        handleChange={handleChange} required />
+                                    <FormInput
+                                        label='Region' type='text'
+                                        name='billingRegion' value={billingRegion}
+                                        handleChange={handleChange} required />
+                                </CustomInputWrapper>
+                            </FormInputContainer>
+                        </CheckoutFormFieldset>
+                        <CheckoutFormButtonContainer className={paymentType.toLocaleLowerCase()}>
                             <CheckoutBackButton type="button" isLink={true} onClick={() => {
                                 setStep(2);
                             }}><BackArrow>&larr;</BackArrow>Back to Shipping</CheckoutBackButton>
                             <CustomButton type="submit">Place Order</CustomButton>
                         </CheckoutFormButtonContainer>
-                    </CheckoutFormFieldset>
+                    </CheckoutFormFieldsetContiner>
                 </form>
             </CheckoutFormWrapper>
-        </CheckoutFormContainer >
+        </CheckoutFormContainer>
     )
 };
 

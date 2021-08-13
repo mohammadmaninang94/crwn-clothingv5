@@ -6,13 +6,20 @@ import { CheckoutTableContainer } from '../../components/checkout-table/checkout
 export const CheckoutPageContainer = styled.div`
     min-height: 70vh;
     width: 60vw;
-    margin: 5rem auto 0;
+    margin: 2rem auto 0;
 
     display: flex;
     justify-content: flex-start;
 
     & ${CheckoutFormContainer} {
         flex: 2 0 60%;
+    }
+
+    @media only screen and (max-width: 85.37em) {
+        width: 90vw;
+        & ${CheckoutTableContainer}{
+            padding: 1rem;
+        }
     }
 
     @media only screen and (max-width: 75em) {
@@ -22,7 +29,8 @@ export const CheckoutPageContainer = styled.div`
         }
     }
 
-    @media only screen and (max-width: 37.5em) {
+    @media only screen and (max-width: 56.25em),
+    only screen and (max-width: 37.5em) {
         flex-direction: column;
         width: 100vw;
         margin: 0;        

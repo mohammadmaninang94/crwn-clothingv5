@@ -15,19 +15,31 @@ export const CheckoutFormWrapper = styled.div`
 
 export const CheckoutFormFieldset = styled.fieldset`
     border: none;
-    visibility: hidden;
-    max-height: 0;
-    height: 0;
-    opacity: 0;
-    transition: max-height .2s, visibility .5s, opacity .3s;
-    padding: 0;
-    margin: 0;
-    line-height: 0;
+    display: none;
+    margin-bottom: 2rem;
 
     &.show {
-        max-height: 100%;
-        opacity: 100;
-        visibility: visible
+        display: flex;
+        flex-direction: column;
+
+        @media only screen and (max-width: 56.25em),
+        only screen and (max-width: 37.5em) {
+            flex: 1 0 auto;
+        }
+    }
+
+`;
+
+export const CheckoutFormFieldsetContiner = styled.fieldset`
+    border: none;
+    height: calc(100vh - 25rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-bottom: 2rem;
+
+    &.hide {
+        display: none;
     }
 `;
 
@@ -57,8 +69,8 @@ export const CheckoutFormSlug = styled.ul`
     list-style: none;
     margin-bottom: 5rem;
 
-    @media only screen and (max-width: 37.5em) {
-        justify-content: space-around;
+    @media only screen and (max-width: 56.25em),
+    only screen and (max-width: 37.5em) {
         margin: 1rem 1.5rem 3rem 1.5rem;
     }
 `;
@@ -77,11 +89,11 @@ export const CheckoutFormSlugItem = styled.li`
 export const CheckoutFormButtonContainer = styled.div`
     display: flex;
     justify-content: space-between;
-    margin: 2rem 0;   
+    margin-top: 2rem;   
 
     @media only screen and (max-width: 37.5em) {
         flex-direction: column-reverse;
-        gap: 1rem
+        gap: 1rem;
     }
 `;
 
@@ -101,3 +113,13 @@ export const CheckoutBackButton = styled(CustomButton)`
     }
 `;
 
+export const FormInputContainer = styled.div`
+    display: block;
+    &.hide {
+        display: none;
+    }
+`;
+
+export const PaymentTypeContainer = styled.div`
+    margin-bottom: 1rem;
+`;

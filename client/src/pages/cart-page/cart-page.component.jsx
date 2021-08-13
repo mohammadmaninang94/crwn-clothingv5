@@ -6,8 +6,8 @@ const CartPage = () => (
     <CartPageContainer>
         <CartFormSlug>
             <CartFormSlugItem isActive={true}>Cart</CartFormSlugItem>
-            <CartFormSlugItem>Shipping Information</CartFormSlugItem>
-            <CartFormSlugItem>Payment Method</CartFormSlugItem>
+            <CartFormSlugItem>Shipping</CartFormSlugItem>
+            <CartFormSlugItem>Payment</CartFormSlugItem>
         </CartFormSlug>
         <CartTable sidebar={false} />
     </CartPageContainer>

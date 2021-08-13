@@ -16,6 +16,9 @@ html {
   html {
     font-size: 60%;
   }
+  body, div#root {
+    height: 100%;
+  }
 }
 
 body {

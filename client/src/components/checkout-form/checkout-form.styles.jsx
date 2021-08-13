@@ -16,7 +16,6 @@ export const CheckoutFormWrapper = styled.div`
 export const CheckoutFormFieldset = styled.fieldset`
     border: none;
     display: none;
-    margin-bottom: 2rem;
 
     &.show {
         display: flex;
@@ -36,7 +35,6 @@ export const CheckoutFormFieldsetContiner = styled.fieldset`
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    margin-bottom: 2rem;
 
     &.hide {
         display: none;
@@ -121,5 +119,5 @@ export const FormInputContainer = styled.div`
 `;
 
 export const PaymentTypeContainer = styled.div`
-    margin-bottom: 1rem;
+    margin-bottom: 3rem;
 `;

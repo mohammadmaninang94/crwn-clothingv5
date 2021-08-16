@@ -31,6 +31,15 @@ export const CartSidebarContainer = styled.div`
 
     ${getAnimationStyles}
     transition: transform .5s cubic-bezier(.645, .045, .355, 1),visibility .5s cubic-bezier(.645, .045, .355, 1),-webkit-transform .5s cubic-bezier(.645, .045, .355, 1);
+
+    @media only screen and (max-width: 56.25em){
+        width: 45rem;
+    }
+
+    @media only screen and (max-width: 37.5em) {
+        width: 100vw;
+        padding-bottom: 5rem;
+    }
 `;
 
 export const CartClose = styled.button`

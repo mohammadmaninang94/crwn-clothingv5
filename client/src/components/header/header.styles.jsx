@@ -8,7 +8,7 @@ export const HeaderContainer = styled.div`
     align-items: center;
     letter-spacing: .1em;
 
-    @media only screen and (max-width: 37.5em) {
+    @media only screen and (max-width: 56.25em) {
       height: 7rem;
       margin: 1rem;
     }

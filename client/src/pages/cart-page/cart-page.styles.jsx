@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const CartPageContainer = styled.div`
     width: 50vw;
-    margin: 5rem auto;
+    margin: 2rem auto;
     font-size: 1.6rem;
     letter-spacing: .2rem;
     text-transform: uppercase;
@@ -23,7 +23,7 @@ export const CartFormSlug = styled.ul`
     font-size: 1.6rem;
     text-transform: none;
     list-style: none;
-    margin-bottom: 5rem;
+    margin-bottom: 3rem;
 
     @media only screen and (max-width: 37.5em) {
         margin: 1rem 1.5rem;

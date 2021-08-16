@@ -44,6 +44,11 @@ export const CheckoutItemQty = styled.span`
     top: -8px;
     left: 58px;
 
+    &::before {
+        content: "";
+        padding-left: 2px;
+    }
+
     @media only screen and (max-width: 37.5em) {
         top: -7px;
         left: 55px;

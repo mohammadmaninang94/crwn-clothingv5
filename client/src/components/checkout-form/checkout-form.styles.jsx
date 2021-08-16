@@ -11,6 +11,18 @@ export const CheckoutFormContainer = styled.div`
 
 export const CheckoutFormWrapper = styled.div`
     padding: 0 2rem;
+
+    & form {
+        border: none;
+        height: calc(100vh - 25rem);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        &.hide {
+            display: none;
+        }
+    }
 `;
 
 export const CheckoutFormFieldset = styled.fieldset`
@@ -25,19 +37,6 @@ export const CheckoutFormFieldset = styled.fieldset`
         only screen and (max-width: 37.5em) {
             flex: 1 0 auto;
         }
-    }
-
-`;
-
-export const CheckoutFormFieldsetContiner = styled.fieldset`
-    border: none;
-    height: calc(100vh - 25rem);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-
-    &.hide {
-        display: none;
     }
 `;
 

@@ -26,7 +26,7 @@ export const CustomLabel = styled.label`
 `;
 
 export const CustomInput = styled.input`
-    display: block;
+    display: ${({ type }) => type === 'radio' ? 'none' : 'block'} ;
     width: 100%;
     padding: 2.5rem 1rem .5rem 1rem;
     background-color: var(--color-white);
@@ -47,5 +47,42 @@ export const CustomInput = styled.input`
 
     &:focus  + ${CustomLabel} {
       ${shrinkLabel}
+    }
+`;
+
+export const CustomRadioLabel = styled.label`
+    font-size: 1.6rem;
+    cursor: pointer;
+    position: relative;
+    padding-left: 4.5rem;
+`;
+
+export const CustomRadioSpan = styled.span`
+    height: 2rem;
+    width: 2rem;
+    border: 2px solid var(--color-black-lighter);
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    ${CustomInput}:checked + &::after {
+      opacity: 1;
+    }
+
+    &::after {
+      content: "";
+      display: block;
+      height: 1.3rem;
+      width: 1.3rem;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: var(--color-black-light);
+      opacity: 0;
+      transition: opacity .2s;
     }
 `;

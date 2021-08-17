@@ -33,8 +33,7 @@ export const CheckoutFormFieldset = styled.fieldset`
         display: flex;
         flex-direction: column;
 
-        @media only screen and (max-width: 56.25em),
-        only screen and (max-width: 37.5em) {
+        @media only screen and (max-width: 37.5em) {
             flex: 1 0 auto;
         }
     }

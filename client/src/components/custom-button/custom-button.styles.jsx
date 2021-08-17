@@ -72,5 +72,9 @@ export const ButtonContainer = styled.button`
     transition: all 0.1s ease-in;
     cursor: pointer;
 
+    @media only screen and (max-width: 75em) {
+        box-shadow: none;
+    }
+
     ${getCustomStyles}
 `;

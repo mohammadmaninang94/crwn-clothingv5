@@ -25,8 +25,7 @@ const CheckoutTable = ({ cartItems, cartTotalPrice }) => {
                 <CheckoutSummaryToggle>
                     <Fragment>
                         <span>Order summary</span>
-                        <FaIcon icon={faChevronDown} className={summaryHidden ? '' : 'show'} />
-                        <FaIcon icon={faChevronUp} className={summaryHidden ? 'show' : ''} />
+                        <FaIcon icon={summaryHidden ? faChevronDown : faChevronUp} />
                     </Fragment>
                 </CheckoutSummaryToggle>
                 <CheckoutTotalPrice>{convertToPHPCurrency(cartTotalPrice)}</CheckoutTotalPrice>

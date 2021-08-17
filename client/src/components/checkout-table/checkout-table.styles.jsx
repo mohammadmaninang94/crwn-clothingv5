@@ -89,19 +89,12 @@ export const CheckoutSummaryToggle = styled.div`
 
 export const FaIcon = styled(FontAwesomeIcon)`
     font-size: 1.6rem;
-    opacity: 0;
-    height: 0;
     transition: all .2s ease;
 
     display: block;
     position: absolute;
-    top: 1px;
+    top: 7px;
     right: -10px;
-
-    &.show {
-        opacity: 1;
-        height: 100%;
-    }
 `;
 
 export const CheckoutSummaryItemContainer = styled.div`

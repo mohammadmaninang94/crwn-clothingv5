@@ -9,6 +9,10 @@ const shrinkLabel = css`
 export const CustomInputContainer = styled.div`
   margin-top: 2rem;
   position: relative;
+
+  @media only screen and (max-width: 37.5em) {
+      width: 100%;
+  }
 `;
 
 export const CustomLabel = styled.label`
@@ -55,6 +59,11 @@ export const CustomRadioLabel = styled.label`
     cursor: pointer;
     position: relative;
     padding-left: 4.5rem;
+    position: relative;
+
+    @media only screen and (max-width: 37.5em) {
+        width: 100%;
+    }
 `;
 
 export const CustomRadioSpan = styled.span`

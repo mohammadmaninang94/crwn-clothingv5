@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom'
+import { philData, address } from 'addresspinas'
 
 import FormInput from '../form-input/form-input.component';
+import FormSelect from '../form-select/form-select.component';
 import CustomButton from './../custom-button/custom-button.component';
 
 import {
@@ -15,7 +17,7 @@ import {
 const CheckoutForm = () => {
     const [checkout, setCheckout] = useState({
         shippingFirstName: '', shippingLastName: '', shippingAddress1: '',
-        shippingAddress2: '', shippingProvince: '', shippingZipCode: '',
+        shippingCityMun: '', shippingProvince: '', shippingZipCode: '',
         shippingEmailAddress: '', shippingRegion: '', shippingMobileNo: '',
         billingFirstName: '', billingLastName: '', billingAddress1: '',
         billingAddress2: '', billingProvince: '', billingZipCode: '',
@@ -23,24 +25,59 @@ const CheckoutForm = () => {
         paymentType: 'COD'
     });
 
+    const [philippineAddress, setPhilippineAddress] = useState({
+        regions: [], provinces: [],
+        cityAndMun: [], barangays: [],
+        zipCodes: []
+    });
+
     const [step, setStep] = useState(2);
 
     const history = useHistory();
-
-    const handleChange = event => {
-        const { name, value } = event.target;
-        setCheckout({ ...checkout, [name]: value });
-    };
 
     const handleShippingSubmit = event => {
         event.preventDefault();
         setStep(3);
     };
 
+    const handleChange = event => {
+        const { name, value } = event.target;
+        setCheckout({ ...checkout, [name]: value });
+
+        if (event.target.type === 'select-one') {
+            const selectedndex = event.target.selectedIndex;
+            const code = event.target[selectedndex].getAttribute('data-code');
+            switch (name) {
+                case 'shippingRegion':
+                    const { provinces } = address.getProvinceOfRegion(code);
+                    setPhilippineAddress({ ...philippineAddress, provinces: provinces });
+                    break;
+                case 'shippingProvince':
+                    const { cityAndMun } = address.getCityMunOfProvince(code);
+                    setPhilippineAddress({ ...philippineAddress, cityAndMun: cityAndMun });
+                    break;
+                case 'shippingCityMun':
+                    const { barangays } = address.getBarangaysOfCityMun(code);
+                    setPhilippineAddress({ ...philippineAddress, barangays: barangays });
+                    break;
+                case 'shippingBrgy':
+                    const zipCodes = address.getZipcode({ name: '', mun_code: code });
+                    setPhilippineAddress({ ...philippineAddress, zipCodes: zipCodes });
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    useEffect(() => {
+        const { regions } = philData.allRegions;
+        setPhilippineAddress({ ...philippineAddress, regions: regions });
+    }, [setPhilippineAddress]);
+
     const {
         shippingFirstName, shippingLastName, shippingAddress1,
-        shippingAddress2, shippingProvince, shippingEmailAddress,
-        shippingZipCode, shippingRegion, shippingMobileNo,
+        shippingEmailAddress, shippingMobileNo,
         billingFirstName, billingLastName, billingAddress1,
         billingAddress2, billingProvince, billingEmailAddress,
         billingZipCode, billingRegion, billingMobileNo, paymentType
@@ -77,28 +114,50 @@ const CheckoutForm = () => {
                                     name='shippingMobileNo' value={shippingMobileNo}
                                     handleChange={handleChange} required />
                             </CustomInputWrapper>
+                            <CustomInputWrapper>
+                                <FormSelect name='shippingRegion'
+                                    label='Region'
+                                    handleChange={handleChange}>
+                                    <option value=''>Region</option>
+                                    {philippineAddress.regions.map(({ name, reg_code }) => (
+                                        <option key={reg_code} value={reg_code} data-code={reg_code}>{name}</option>
+                                    ))}
+                                </FormSelect>
+                                <FormSelect name='shippingProvince' handleChange={handleChange}>
+                                    <option value=''>Province</option>
+                                    {philippineAddress.provinces ?
+                                        philippineAddress.provinces.map(({ name, prov_code }) => (
+                                            <option key={prov_code} value={prov_code} data-code={prov_code}>{name}</option>
+                                        )) : null}
+                                </FormSelect>
+                            </CustomInputWrapper>
+                            <CustomInputWrapper>
+                                <FormSelect name='shippingCityMun' handleChange={handleChange}>
+                                    <option value=''>City or Municipality</option>
+                                    {philippineAddress.cityAndMun ?
+                                        philippineAddress.cityAndMun.map(({ name, mun_code }) => (
+                                            <option key={mun_code} value={mun_code} data-code={mun_code}>{name}</option>
+                                        )) : null}
+                                </FormSelect>
+                                <FormSelect name='shippingBrgy' handleChange={handleChange}>
+                                    <option value=''>Barangay</option>
+                                    {philippineAddress.barangays ?
+                                        philippineAddress.barangays.map(({ name, mun_code }) => (
+                                            <option key={name} value={mun_code} data-code={mun_code}>{name}</option>
+                                        )) : null}
+                                </FormSelect>
+                            </CustomInputWrapper>
+                            <FormSelect name='shippingZipCode' handleChange={handleChange}>
+                                <option value=''>Zip Code</option>
+                                {philippineAddress.zipCodes ?
+                                    philippineAddress.zipCodes.map(zipCode => (
+                                        <option key={zipCode} value={zipCode}>{zipCode}</option>
+                                    )) : null}
+                            </FormSelect>
                             <FormInput
                                 label='Unit/House No. & Street Name' type='text'
                                 name='shippingAddress1' value={shippingAddress1}
                                 handleChange={handleChange} required />
-                            <FormInput
-                                label='Barangay, City and Municipality' type='text'
-                                name='shippingAddress2' value={shippingAddress2}
-                                handleChange={handleChange} required />
-                            <CustomInputWrapper>
-                                <FormInput
-                                    label='Province' type='text'
-                                    name='shippingProvince' value={shippingProvince}
-                                    handleChange={handleChange} required />
-                                <FormInput
-                                    label='Zip Code' type='text'
-                                    name='shippingZipCode' value={shippingZipCode}
-                                    handleChange={handleChange} required />
-                                <FormInput
-                                    label='Region' type='text'
-                                    name='shippingRegion' value={shippingRegion}
-                                    handleChange={handleChange} required />
-                            </CustomInputWrapper>
                         </FormInputContainer>
                         <CheckoutFormButtonContainer>
                             <CheckoutBackButton type="button" isLink={true} onClick={() => {

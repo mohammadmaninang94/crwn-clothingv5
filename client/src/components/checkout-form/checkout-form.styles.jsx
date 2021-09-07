@@ -14,7 +14,6 @@ export const CheckoutFormWrapper = styled.div`
 
     & form {
         border: none;
-        height: calc(100vh - 25rem);
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -91,6 +90,7 @@ export const CheckoutFormButtonContainer = styled.div`
     @media only screen and (max-width: 37.5em) {
         flex-direction: column-reverse;
         gap: 1rem;
+        margin-bottom: 2rem;  
     }
 `;
 

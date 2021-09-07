@@ -12,7 +12,7 @@ import {
     FaIcon, CheckoutSummaryItemContainer
 } from './checkout-table.styles';
 
-const CheckoutTable = ({ cartItems, cartTotalPrice }) => {
+const CheckoutTable = ({ cartItems, cartTotalPrice, shippingFee, shippingFeeMessage }) => {
     const [summaryHidden, setSummaryHidden] = useState(true);
 
     const handleSummaryClick = event => {
@@ -41,7 +41,7 @@ const CheckoutTable = ({ cartItems, cartTotalPrice }) => {
                     </CheckoutBreakdown>
                     <CheckoutBreakdown>
                         <CheckoutBreakdownText>Shipping Fee</CheckoutBreakdownText>
-                        <CheckoutBreakdownText>Calculated at next step</CheckoutBreakdownText>
+                        <CheckoutBreakdownText>{shippingFee ? convertToPHPCurrency(shippingFee) : shippingFeeMessage}</CheckoutBreakdownText>
                     </CheckoutBreakdown>
                 </CheckoutBreakdownContainer>
                 <CheckoutBreakdownContainer>

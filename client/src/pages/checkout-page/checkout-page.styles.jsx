@@ -6,10 +6,11 @@ import { CheckoutTableContainer } from '../../components/checkout-table/checkout
 export const CheckoutPageContainer = styled.div`
     min-height: 70vh;
     width: 60vw;
-    margin: 2rem auto 0;
+    margin: 2rem auto;
 
     display: flex;
     justify-content: flex-start;
+    position: relative;
 
     & ${CheckoutFormContainer} {
         flex: 2 0 60%;

@@ -1,11 +1,15 @@
 import styled from 'styled-components';
 
 export const SpinnerOverlay = styled.div`
-  height: 60vh;
+  height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  transform: translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
 `;
 
 export const SpinnerContainer = styled.div`

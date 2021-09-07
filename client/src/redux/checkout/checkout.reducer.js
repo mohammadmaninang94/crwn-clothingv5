@@ -3,25 +3,35 @@ import checkoutActionTypes from "./checkout.types";
 const INITIAL_SHIPPING_FEE_MESSAGE = 'Calculated at next step';
 
 const INITIAL_STATE = {
-    shippingFirstName: '', shippingLastName: '', shippingAddress1: '',
-    shippingCityMun: '', shippingProvince: '', shippingZipCode: '',
-    shippingEmailAddress: '', shippingRegion: '', shippingMobileNo: '',
-    billingFirstName: '', billingLastName: '', billingAddress1: '',
-    billingAddress2: '', billingProvince: '', billingZipCode: '',
-    billingEmailAddress: '', billingRegion: '', billingMobileNo: '',
-    paymentType: 'COD', isFetchingShippingFee: false,
-    shippingFee: 0, shippingFeeMessage: INITIAL_SHIPPING_FEE_MESSAGE,
+    shippingDetails: {
+        firstName: '', lastName: '', mobileNo: '', emailAddress: '',
+        address1: '', cityMun: '', province: '',
+        region: '', zipCode: '', brgy: ''
+    },
+    billingDetails: {
+        firstName: '', lastName: '', mobileNo: '', emailAddress: '',
+        address1: '', cityMun: '', province: '',
+        region: '', zipCode: '', brgy: ''
+    },
+    shippingFee: 0,
+    isFetchingShippingFee: false,
+    shippingFeeMessage: INITIAL_SHIPPING_FEE_MESSAGE,
+    paymentType: 'COD',
     step: 2
 };
 
 
 const checkoutReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case checkoutActionTypes.UPDATE_PROP:
-            const { key, value } = action.payload;
+        case checkoutActionTypes.UPDATE_SHIPPING_DETAILS:
             return {
                 ...state,
-                [key]: value
+                shippingDetails: action.payload               
+            }
+        case checkoutActionTypes.UPDATE_BILLINGING_DETAILS:
+            return {
+                ...state,
+                billingDetails: action.payload
             }
         case checkoutActionTypes.CALCULATE_SHIPPING_FEE_START:
             return {

@@ -22,15 +22,17 @@ export const selectIsShippingFeeFetching = createSelector(
     checkout => checkout.isFetchingShippingFee
 );
 
-export const selectShippingAddress = createSelector(
+export const selectShippingDetails = createSelector(
     [selectCheckout],
-    checkout => {
-        const { shippingAddress1, shippingCityMun, shippingProvince, shippingZipCode,
-            shippingEmailAddress, shippingRegion } = checkout;
+    checkout => checkout.shippingDetails
+);
 
-        return {
-            shippingAddress1, shippingCityMun, shippingProvince, shippingZipCode,
-            shippingEmailAddress, shippingRegion
-        }
-    }
+export const selectBillingDetails = createSelector(
+    [selectCheckout],
+    checkout => checkout.billingDetails
+);
+
+export const selectPaymentType = createSelector(
+    [selectCheckout],
+    checkout => checkout.paymentType
 );

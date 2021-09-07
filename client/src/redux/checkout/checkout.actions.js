@@ -1,8 +1,13 @@
 import checkoutActionTypes from "./checkout.types";
 
-export const updateCheckout = (key, value) => ({
-    type: checkoutActionTypes.UPDATE_PROP,
-    payload: { key, value }
+export const updateShippingDetails = (shippingDetails) => ({
+    type: checkoutActionTypes.UPDATE_SHIPPING_DETAILS,
+    payload: shippingDetails
+});
+
+export const updateBillingDetails = (billingDetails) => ({
+    type: checkoutActionTypes.UPDATE_BILLINGING_DETAILS,
+    payload: billingDetails
 });
 
 export const fetchShippingFeeStart = () => ({

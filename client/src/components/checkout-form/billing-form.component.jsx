@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { updateStep, updateBillingDetails } from '../../redux/checkout/checkout.actions';
-import { selectBillingDetails, selectPaymentType } from '../../redux/checkout/checkout.selectors';
+import { updateCheckoutStep, updateBillingDetails } from '../../redux/checkout/checkout.actions';
+import { selectBillingDetails } from '../../redux/checkout/checkout.selectors';
 
 import FormInput from '../form-input/form-input.component';
 import FormSelect from '../form-select/form-select.component';
@@ -19,10 +19,8 @@ import {
 const BillingForm = ({ step }) => {
     const dispatch = useDispatch();
     const reduxBillingDetails = useSelector(selectBillingDetails);
-    const reduxPaymentType = useSelector(selectPaymentType);
 
     const [billingDetails, setBillingDetails] = useState(reduxBillingDetails);
-    const [paymentType, setPaymentType] = useState(reduxPaymentType);
 
     const [dropdownAddress, setDropdownAddress] = useState({
         regions: [], provinces: [],
@@ -32,7 +30,7 @@ const BillingForm = ({ step }) => {
 
     const { firstName, lastName, mobileNo, emailAddress,
         address1, cityMun, province, barangay,
-        region, zipCode } = billingDetails;
+        region, zipCode, paymentType } = billingDetails;
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -54,11 +52,6 @@ const BillingForm = ({ step }) => {
         }
     }
 
-    const handleRadioChange = event => {
-        const { value } = event.target;
-        setPaymentType(value);
-    };
-
     useEffect(() => {
         const populatedDropdowns = () => {
             const dropdownObj = GetDropdownData(region, province, cityMun, barangay);
@@ -66,6 +59,7 @@ const BillingForm = ({ step }) => {
         };
 
         populatedDropdowns();
+        // eslint-disable-next-line
     }, []);
 
     return (
@@ -75,16 +69,16 @@ const BillingForm = ({ step }) => {
                 <PaymentTypeContainer>
                     <FormInput label='Cash on delivery' type='radio'
                         name='paymentType' value='COD' checked={paymentType === 'COD' ? "checked" : ""}
-                        handleChange={handleRadioChange} required />
+                        handleChange={handleChange} required />
                     <FormInput label='Gcash' type='radio'
-                        name='paymentType' value='GCash'
-                        handleChange={handleRadioChange} required />
+                        name='paymentType' value='GCash' checked={paymentType === 'GCash' ? "checked" : ""}
+                        handleChange={handleChange} required />
                     <FormInput label='GrabPay' type='radio'
-                        name='paymentType' value='GrabPay'
-                        handleChange={handleRadioChange} required />
+                        name='paymentType' value='GrabPay' checked={paymentType === 'GrabPay' ? "checked" : ""}
+                        handleChange={handleChange} required />
                     <FormInput label='Credit/Debit Card' type='radio'
-                        name='paymentType' value='CreditCard'
-                        handleChange={handleRadioChange} required />
+                        name='paymentType' value='CreditCard' checked={paymentType === 'CreditCard' ? "checked" : ""}
+                        handleChange={handleChange} required />
                 </PaymentTypeContainer>
             </CheckoutFormFieldset>
             <CheckoutFormFieldset className={paymentType === 'COD' ? "hide" : "show"}>
@@ -161,7 +155,7 @@ const BillingForm = ({ step }) => {
             <CheckoutFormButtonContainer className={paymentType.toLocaleLowerCase()}>
                 <CheckoutBackButton type="button" isLink={true} onClick={() => {
                     dispatch(updateBillingDetails(billingDetails));
-                    dispatch(updateStep(2));
+                    dispatch(updateCheckoutStep(2));
                 }}><BackArrow>&larr;</BackArrow>Back to Shipping</CheckoutBackButton>
                 <CustomButton type="submit">Place Order</CustomButton>
             </CheckoutFormButtonContainer>

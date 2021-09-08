@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { fetchShippingFeeStart, updateShippingDetails } from '../../redux/checkout/checkout.actions';
+import { fetchShippingFeeStart, updateShippingDetails, updateCheckoutStep } from '../../redux/checkout/checkout.actions';
 import { selectShippingDetails } from '../../redux/checkout/checkout.selectors';
 
 import FormInput from '../form-input/form-input.component';
@@ -36,7 +36,16 @@ const ShippingForm = ({ step }) => {
 
     const handleSubmit = event => {
         event.preventDefault();
-        dispatch(fetchShippingFeeStart());
+        dispatch(updateShippingDetails(shippingDetails));
+        if (reduxShippingDetails.zipCode !== zipCode ||
+            reduxShippingDetails.barangay !== barangay ||
+            reduxShippingDetails.cityMun !== cityMun ||
+            reduxShippingDetails.province !== province ||
+            reduxShippingDetails.region !== region) {
+            dispatch(fetchShippingFeeStart());
+        }else{
+            dispatch(updateCheckoutStep(3));
+        }
     };
 
     const handleChange = event => {
@@ -60,6 +69,7 @@ const ShippingForm = ({ step }) => {
         };
 
         populatedDropdowns();
+        // eslint-disable-next-line
     }, []);
 
     return (

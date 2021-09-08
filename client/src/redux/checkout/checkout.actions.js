@@ -24,7 +24,7 @@ export const fetchShippingFeeFailed = (message) => ({
     payload: message
 });
 
-export const updateStep = (step) => ({
+export const updateCheckoutStep = (step) => ({
     type: checkoutActionTypes.UPDATE_STEP,
     payload: step
 });

@@ -6,17 +6,16 @@ const INITIAL_STATE = {
     shippingDetails: {
         firstName: '', lastName: '', mobileNo: '', emailAddress: '',
         address1: '', cityMun: '', province: '',
-        region: '', zipCode: '', brgy: ''
+        region: '', zipCode: '', barangay: ''
     },
     billingDetails: {
         firstName: '', lastName: '', mobileNo: '', emailAddress: '',
         address1: '', cityMun: '', province: '',
-        region: '', zipCode: '', brgy: ''
+        region: '', zipCode: '', barangay: '', paymentType: 'COD'
     },
     shippingFee: 0,
     isFetchingShippingFee: false,
     shippingFeeMessage: INITIAL_SHIPPING_FEE_MESSAGE,
-    paymentType: 'COD',
     step: 2
 };
 
@@ -26,7 +25,7 @@ const checkoutReducer = (state = INITIAL_STATE, action) => {
         case checkoutActionTypes.UPDATE_SHIPPING_DETAILS:
             return {
                 ...state,
-                shippingDetails: action.payload               
+                shippingDetails: action.payload
             }
         case checkoutActionTypes.UPDATE_BILLINGING_DETAILS:
             return {
@@ -37,7 +36,7 @@ const checkoutReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 isFetchingShippingFee: true,
-                shippingFeeMessage: 'Calculating...',
+                shippingFeeMessage: 'Calculating...'
             }
         case checkoutActionTypes.CALCULATE_SHIPPING_FEE_SUCCESS:
             return {

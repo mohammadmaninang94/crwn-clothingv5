@@ -7,6 +7,19 @@ export const CheckoutFormContainer = styled.div`
     width: 100%;
     font-size: 1.6rem; 
     letter-spacing: .2rem;
+
+    & .StripeElement--webkit-autofill {
+        background: transparent !important;
+    }
+
+    & .StripeElement {
+        margin-top: 2rem;
+        width: 100%;
+        padding: 1.2rem 1rem;
+        background-color: var(--color-white);
+        border: 1px solid var(--color-black-lighter);
+        border-radius: 5px;
+    }
 `;
 
 export const CheckoutFormWrapper = styled.div`

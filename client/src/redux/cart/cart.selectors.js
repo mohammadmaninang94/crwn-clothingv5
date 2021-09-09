@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { selectShippingFee } from '../checkout/checkout.selectors';
 
 const selectCart = state => state.cart;
 
@@ -18,8 +19,14 @@ export const selectCartItemsCount = createSelector(
         accumulatedQty + item.quantity, 0)
 );
 
-export const selectCartTotalPrice = createSelector(
+export const selectCartSubTotalPrice = createSelector(
     [selectCartItems],
     cartItems => cartItems.reduce((accumulatedQty, item) =>
         accumulatedQty + (item.quantity * item.price), 0)
+);
+
+export const selectCartTotalPrice = createSelector(
+    [selectCartItems, selectShippingFee],
+    (cartItems, shippingFee) => cartItems.reduce((accumulatedQty, item) =>
+        accumulatedQty + (item.quantity * item.price), 0) + shippingFee
 );

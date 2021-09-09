@@ -1,45 +1,62 @@
-import StripeCheckout from 'react-stripe-checkout';
-import { useDispatch } from 'react-redux';
-import axios from 'axios';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux'; 
 
-import { clearCart } from '../../redux/cart/cart.actions';
+import { fetchStripePaymentIntentStart, updatePaymentDisabled } from '../../redux/checkout/checkout.actions';
 
-const stripeKey = 'pk_test_51GrdPxGXQEpKYmCgqpBcsxmOHkFPCIIGBaxpXOB5cqDtcwDm3C5GcZFQoIWiA3NgHpyFBTHBPDW0kTCFMQAeCE6a003uQm1GaR';
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
 const StripeButton = ({ total }) => {
+    const stripe = useStripe();
+    const elements = useElements();
     const dispatch = useDispatch();
 
-    const priceForStripe = total * 100;
-    const currencyForStripe = 'PHP';
+    useEffect(() => {
+        const priceForStripe = total * 100;
+        const currencyForStripe = 'PHP';
 
-    const onToken = token => {
-        axios({
-            url: 'payment',
-            method: 'post',
-            data: {
-                amount: priceForStripe,
-                currency: currencyForStripe,
-                token
+        const stripeData = {
+            amount: priceForStripe,
+            currency: currencyForStripe
+        };
+
+        dispatch(fetchStripePaymentIntentStart(stripeData));
+    }, [dispatch, total]);
+
+    const handleChange = async (event) => {
+        // Listen for changes in the CardElement
+        // and display any errors as the customer types their card details
+        updatePaymentDisabled(event.empty);
+        // setError(event.error ? event.error.message : "");
+      };
+
+    const cardOptions = {
+        style: {
+            base: {
+                color: "black",
+                fontWeight: 300,
+                fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
+                fontSize: "16px",
+                fontSmoothing: "antialiased",
+                letterSpacing: "2px",
+                ":-webkit-autofill": {
+                    color: "#fce883"
+                },
+                "::placeholder": {
+                    color: "rgb(98, 102, 102)"
+                }
+            },
+            invalid: {
+                iconColor: "#ffc7ee",
+                color: "#ffc7ee"
             }
-        }).then(response => {
-            alert('Successful payment');
-            dispatch(clearCart());
-        }).catch(error => {
-            console.log({ error });
-            alert('Please use the provided test credit card.')
-        });
-    }
+        },
+        hidePostalCode: true
+    };
 
     return (
-        <StripeCheckout
-            name='CRWN Clothing Ltd.'
-            description={`Your total price is ${total}`}
-            amount={priceForStripe}
-            currency={currencyForStripe}
-            stripeKey={stripeKey}
-            shippingAddress
-            billingAddress
-            token={onToken}
+        <CardElement
+            options={cardOptions}
+            onChange={handleChange} 
         />
     )
 };

@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
 import { updateCheckoutStep, updateBillingDetails } from '../../redux/checkout/checkout.actions';
+import { fetchStripePaymentIntentStart, updatePaymentDisabled } from '../../redux/checkout/checkout.actions';
 import { selectBillingDetails } from '../../redux/checkout/checkout.selectors';
 
 import FormInput from '../form-input/form-input.component';
@@ -17,25 +19,23 @@ import {
 } from "./checkout-form.styles";
 
 const BillingForm = ({ step }) => {
+    const stripe = useStripe();
+    const elements = useElements();
     const dispatch = useDispatch();
     const reduxBillingDetails = useSelector(selectBillingDetails);
-
     const [billingDetails, setBillingDetails] = useState(reduxBillingDetails);
-
     const [dropdownAddress, setDropdownAddress] = useState({
         regions: [], provinces: [],
         cityAndMun: [], barangays: [],
         zipCodes: []
     });
-
     const { firstName, lastName, mobileNo, emailAddress,
         address1, cityMun, province, barangay,
-        region, zipCode, paymentType } = billingDetails;
+        region, zipCode } = billingDetails;
+    const [paymentType, setPaymentType] = useState('COD');
 
-    const handleSubmit = event => {
+    const handleSubmit = async event => {
         event.preventDefault();
-        dispatch(updateBillingDetails(billingDetails));
-        alert('Successfully placed order');
     };
 
     const handleChange = event => {
@@ -52,6 +52,11 @@ const BillingForm = ({ step }) => {
         }
     }
 
+    const handlePaymentTypeChange = event => {
+        const { value } = event.target;
+        setPaymentType(value);
+    }
+
     useEffect(() => {
         const populatedDropdowns = () => {
             const dropdownObj = GetDropdownData(region, province, cityMun, barangay);
@@ -62,6 +67,18 @@ const BillingForm = ({ step }) => {
         // eslint-disable-next-line
     }, []);
 
+    // useEffect(() => {
+    //     const priceForStripe = total * 100;
+    //     const currencyForStripe = 'PHP';
+
+    //     const stripeData = {
+    //         amount: priceForStripe,
+    //         currency: currencyForStripe
+    //     };
+
+    //     dispatch(fetchStripePaymentIntentStart(stripeData));
+    // }, [dispatch, total]);
+
     return (
         <form onSubmit={handleSubmit} className={step === 3 ? 'show' : 'hide'}>
             <CheckoutFormFieldset className='show'>
@@ -69,16 +86,16 @@ const BillingForm = ({ step }) => {
                 <PaymentTypeContainer>
                     <FormInput label='Cash on delivery' type='radio'
                         name='paymentType' value='COD' checked={paymentType === 'COD' ? "checked" : ""}
-                        handleChange={handleChange} required />
+                        handleChange={handlePaymentTypeChange} required />
                     <FormInput label='Gcash' type='radio'
                         name='paymentType' value='GCash' checked={paymentType === 'GCash' ? "checked" : ""}
-                        handleChange={handleChange} required />
+                        handleChange={handlePaymentTypeChange} required />
                     <FormInput label='GrabPay' type='radio'
                         name='paymentType' value='GrabPay' checked={paymentType === 'GrabPay' ? "checked" : ""}
-                        handleChange={handleChange} required />
+                        handleChange={handlePaymentTypeChange} required />
                     <FormInput label='Credit/Debit Card' type='radio'
                         name='paymentType' value='CreditCard' checked={paymentType === 'CreditCard' ? "checked" : ""}
-                        handleChange={handleChange} required />
+                        handleChange={handlePaymentTypeChange} required />
                 </PaymentTypeContainer>
             </CheckoutFormFieldset>
             <CheckoutFormFieldset className={paymentType === 'COD' ? "hide" : "show"}>
@@ -150,6 +167,7 @@ const BillingForm = ({ step }) => {
                         label='Unit/House No. & Street Name' type='text'
                         name='address1' value={address1}
                         handleChange={handleChange} required />
+
                 </FormInputContainer>
             </CheckoutFormFieldset>
             <CheckoutFormButtonContainer className={paymentType.toLocaleLowerCase()}>

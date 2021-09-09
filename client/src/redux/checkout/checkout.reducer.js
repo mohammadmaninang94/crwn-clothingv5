@@ -11,7 +11,15 @@ const INITIAL_STATE = {
     billingDetails: {
         firstName: '', lastName: '', mobileNo: '', emailAddress: '',
         address1: '', cityMun: '', province: '',
-        region: '', zipCode: '', barangay: '', paymentType: 'COD'
+        region: '', zipCode: '', barangay: ''
+    },
+    paymentDetails: {
+        paymentType: 'COD',
+        successful: false,
+        processing: false,
+        disabled: false,
+        clientSecret: '',
+        error: ''
     },
     shippingFee: 0,
     isFetchingShippingFee: false,
@@ -21,6 +29,7 @@ const INITIAL_STATE = {
 
 
 const checkoutReducer = (state = INITIAL_STATE, action) => {
+    const paymentDetails = state.paymentDetails;
     switch (action.type) {
         case checkoutActionTypes.UPDATE_SHIPPING_DETAILS:
             return {
@@ -58,6 +67,50 @@ const checkoutReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 step: action.payload
+            }
+        case checkoutActionTypes.CREATE_STRIPE_PAYMENT_INTENT_START:
+            return {
+                ...state,
+                paymentDetails: {
+                    ...paymentDetails,
+                    successful: false,
+                    processing: false,
+                    disabled: true,
+                    clientSecret: '',
+                    error: ''
+                }
+            }
+        case checkoutActionTypes.CREATE_STRIPE_PAYMENT_INTENT_SUCCESS:
+            return {
+                ...state,
+                paymentDetails: {
+                    ...paymentDetails,
+                    successful: false,
+                    processing: false,
+                    disabled: false,
+                    clientSecret: action.payload,
+                    error: ''
+                }
+            }
+        case checkoutActionTypes.CREATE_STRIPE_PAYMENT_INTENT_FAILED:
+            return {
+                ...state,
+                paymentDetails: {
+                    ...paymentDetails,
+                    successful: false,
+                    processing: false,
+                    disabled: false,
+                    clientSecret: '',
+                    error: action.payload
+                }
+            }
+        case checkoutActionTypes.UPDATE_PAYMENT_DISABLED:
+            return {
+                ...state,
+                paymentDetails: {
+                    ...paymentDetails,
+                    disabled:  action.payload
+                }
             }
         default:
             return state;

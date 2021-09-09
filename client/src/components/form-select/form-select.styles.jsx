@@ -14,6 +14,7 @@ export const CustomFormSelect = styled.select`
     font-size: inherit;
     padding: 1.2rem 0 1.2rem .5rem;
     letter-spacing: .1rem;
+    font-family: inherit;
 
     & option{
         text-transform: capitalize;

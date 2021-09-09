@@ -24,7 +24,7 @@ body, div#root {
 
 body {
   margin: 0;
-  font-family: "Open Sans Condensed", sans-serif;
+  font-family: Roboto, "Open Sans", "Segoe UI", sans-serif;
   font-weight: 300;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;

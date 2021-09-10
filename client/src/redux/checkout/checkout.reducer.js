@@ -15,10 +15,11 @@ const INITIAL_STATE = {
     },
     paymentDetails: {
         paymentType: 'COD',
-        successful: false,
+        succeeded: false,
         processing: false,
         disabled: false,
         clientSecret: '',
+        message: '',
         error: ''
     },
     shippingFee: 0,
@@ -36,7 +37,7 @@ const checkoutReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 shippingDetails: action.payload
             }
-        case checkoutActionTypes.UPDATE_BILLINGING_DETAILS:
+        case checkoutActionTypes.UPDATE_BILLING_DETAILS:
             return {
                 ...state,
                 billingDetails: action.payload
@@ -73,7 +74,7 @@ const checkoutReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 paymentDetails: {
                     ...paymentDetails,
-                    successful: false,
+                    succeeded: false,
                     processing: false,
                     disabled: true,
                     clientSecret: '',
@@ -85,7 +86,7 @@ const checkoutReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 paymentDetails: {
                     ...paymentDetails,
-                    successful: false,
+                    succeeded: false,
                     processing: false,
                     disabled: false,
                     clientSecret: action.payload,
@@ -97,11 +98,11 @@ const checkoutReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 paymentDetails: {
                     ...paymentDetails,
-                    successful: false,
+                    succeeded: false,
                     processing: false,
                     disabled: false,
                     clientSecret: '',
-                    error: action.payload
+                    message: action.payload
                 }
             }
         case checkoutActionTypes.UPDATE_PAYMENT_DISABLED:
@@ -109,7 +110,48 @@ const checkoutReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 paymentDetails: {
                     ...paymentDetails,
-                    disabled:  action.payload
+                    disabled: action.payload
+                }
+            }
+        case checkoutActionTypes.UPDATE_PAYMENT_ERROR:
+            return {
+                ...state,
+                paymentDetails: {
+                    ...paymentDetails,
+                    error: action.payload
+                }
+            }
+        case checkoutActionTypes.CONFIRM_STRIPE_CARD_PAYMENT_START:
+            return {
+                ...state,
+                paymentDetails: {
+                    ...paymentDetails,
+                    processing: true,
+                    disabled: true,
+                    paymentType: 'stripe',
+                    error: ''
+                }
+            }
+        case checkoutActionTypes.CONFIRM_STRIPE_CARD_PAYMENT_SUCCESS:
+            return {
+                ...state,
+                paymentDetails: {
+                    ...paymentDetails,
+                    succeeded: true,
+                    processing: false,
+                    gatewayResponse: action.payload
+                }
+            }
+        case checkoutActionTypes.CONFIRM_STRIPE_CARD_PAYMENT_FAILED:
+            return {
+                ...state,
+                paymentDetails: {
+                    ...paymentDetails,
+                    succeeded: false,
+                    processing: false,
+                    disabled: false,
+                    error: action.payload.error,
+                    gatewayResponse: action.payload.stripePayload
                 }
             }
         default:

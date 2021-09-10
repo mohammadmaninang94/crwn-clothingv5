@@ -7,6 +7,11 @@ export const selectCheckoutStep = createSelector(
     checkout => checkout.step
 );
 
+export const selectPaymentDetails = createSelector(
+    [selectCheckout],
+    checkout => checkout.paymentDetails
+);
+
 export const selectShippingFee = createSelector(
     [selectCheckout],
     checkout => checkout.shippingFee
@@ -35,4 +40,29 @@ export const selectBillingDetails = createSelector(
 export const selectPaymentType = createSelector(
     [selectCheckout],
     checkout => checkout.paymentType
+);
+
+export const selectPaymentDisabled = createSelector(
+    [selectPaymentDetails],
+    paymentDetails => paymentDetails.disabled
+);
+
+export const selectPaymentClientSecret = createSelector(
+    [selectPaymentDetails],
+    paymentDetails => paymentDetails.clientSecret
+);
+
+export const selectPaymentProcessing = createSelector(
+    [selectPaymentDetails],
+    paymentDetails => paymentDetails.processing
+);
+
+export const selectPaymentError = createSelector(
+    [selectPaymentDetails],
+    paymentDetails => paymentDetails.error
+);
+
+export const selectPaymentSucceeded = createSelector(
+    [selectPaymentDetails],
+    paymentDetails => paymentDetails.succeeded
 );

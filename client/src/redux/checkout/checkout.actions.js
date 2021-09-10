@@ -6,7 +6,7 @@ export const updateShippingDetails = shippingDetails => ({
 });
 
 export const updateBillingDetails = billingDetails => ({
-    type: checkoutActionTypes.UPDATE_BILLINGING_DETAILS,
+    type: checkoutActionTypes.UPDATE_BILLING_DETAILS,
     payload: billingDetails
 });
 
@@ -29,9 +29,8 @@ export const updateCheckoutStep = step => ({
     payload: step
 });
 
-export const fetchStripePaymentIntentStart = stripeData => ({
+export const fetchStripePaymentIntentStart = () => ({
     type: checkoutActionTypes.CREATE_STRIPE_PAYMENT_INTENT_START,
-    payload: stripeData
 });
 
 export const fetchStripePaymentIntentSuccess = clientSecret => ({
@@ -44,7 +43,27 @@ export const fetchStripePaymentIntenteFailed = message => ({
     payload: message
 });
 
+export const confirmStripeCardPaymentStart = (stripe, elements, CardElement) => ({
+    type: checkoutActionTypes.CONFIRM_STRIPE_CARD_PAYMENT_START,
+    payload: { stripe, elements, CardElement }
+});
+
+export const confirmStripeCardPaymentSuccess = (stripePayload) => ({
+    type: checkoutActionTypes.CONFIRM_STRIPE_CARD_PAYMENT_SUCCESS,
+    payload: stripePayload
+});
+
+export const confirmStripeCardPaymentFailed = (error, stripePayload) => ({
+    type: checkoutActionTypes.CONFIRM_STRIPE_CARD_PAYMENT_FAILED,
+    payload: { error, stripePayload }
+});
+
 export const updatePaymentDisabled = disabled => ({
     type: checkoutActionTypes.UPDATE_PAYMENT_DISABLED,
     payload: disabled
+});
+
+export const updatePaymentError = message => ({
+    type: checkoutActionTypes.UPDATE_PAYMENT_ERROR,
+    payload: message
 });

@@ -3,8 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
 import { updateCheckoutStep, updateBillingDetails } from '../../redux/checkout/checkout.actions';
-import { fetchStripePaymentIntentStart, updatePaymentDisabled } from '../../redux/checkout/checkout.actions';
-import { selectBillingDetails } from '../../redux/checkout/checkout.selectors';
+import {
+    fetchStripePaymentIntentStart, updatePaymentDisabled,
+    updatePaymentError, confirmStripeCardPaymentStart
+} from '../../redux/checkout/checkout.actions';
+import {
+    selectBillingDetails, selectPaymentDisabled,
+    selectPaymentProcessing, selectPaymentError, selectPaymentSucceeded
+} from '../../redux/checkout/checkout.selectors';
 
 import FormInput from '../form-input/form-input.component';
 import FormSelect from '../form-select/form-select.component';
@@ -34,8 +40,15 @@ const BillingForm = ({ step }) => {
         region, zipCode } = billingDetails;
     const [paymentType, setPaymentType] = useState('COD');
 
+    // selectors
+    const paymentDisbaled = useSelector(selectPaymentDisabled);
+    const paymentProcessing = useSelector(selectPaymentProcessing);
+    const paymentError = useSelector(selectPaymentError);
+    const paymentSucceeded = useSelector(selectPaymentSucceeded);
+
     const handleSubmit = async event => {
         event.preventDefault();
+        dispatch(confirmStripeCardPaymentStart(stripe, elements, CardElement));
     };
 
     const handleChange = event => {
@@ -57,6 +70,13 @@ const BillingForm = ({ step }) => {
         setPaymentType(value);
     }
 
+    const handleStripeChange = async (event) => {
+        // Listen for changes in the CardElement
+        // and display any errors as the customer types their card details
+        dispatch(updatePaymentDisabled(event.empty));
+        dispatch(updatePaymentError(event.error ? event.error.message : ""));
+    };
+
     useEffect(() => {
         const populatedDropdowns = () => {
             const dropdownObj = GetDropdownData(region, province, cityMun, barangay);
@@ -67,17 +87,33 @@ const BillingForm = ({ step }) => {
         // eslint-disable-next-line
     }, []);
 
-    // useEffect(() => {
-    //     const priceForStripe = total * 100;
-    //     const currencyForStripe = 'PHP';
+    useEffect(() => {
+        dispatch(fetchStripePaymentIntentStart());
+    }, [dispatch]);
 
-    //     const stripeData = {
-    //         amount: priceForStripe,
-    //         currency: currencyForStripe
-    //     };
-
-    //     dispatch(fetchStripePaymentIntentStart(stripeData));
-    // }, [dispatch, total]);
+    const cardOptions = {
+        style: {
+            base: {
+                color: "black",
+                fontWeight: 300,
+                fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
+                fontSize: "16px",
+                fontSmoothing: "antialiased",
+                letterSpacing: "2px",
+                ":-webkit-autofill": {
+                    color: "#fce883"
+                },
+                "::placeholder": {
+                    color: "rgb(98, 102, 102)"
+                }
+            },
+            invalid: {
+                iconColor: "#ffc7ee",
+                color: "#ffc7ee"
+            }
+        },
+        hidePostalCode: true
+    };
 
     return (
         <form onSubmit={handleSubmit} className={step === 3 ? 'show' : 'hide'}>
@@ -87,7 +123,10 @@ const BillingForm = ({ step }) => {
                     <FormInput label='Cash on delivery' type='radio'
                         name='paymentType' value='COD' checked={paymentType === 'COD' ? "checked" : ""}
                         handleChange={handlePaymentTypeChange} required />
-                    <FormInput label='Gcash' type='radio'
+                    <FormInput label='Credit Card with Stripe' type='radio'
+                        name='paymentType' value='stripe' checked={paymentType === 'stripe' ? "checked" : ""}
+                        handleChange={handlePaymentTypeChange} required />
+                    {/*<FormInput label='Gcash' type='radio'
                         name='paymentType' value='GCash' checked={paymentType === 'GCash' ? "checked" : ""}
                         handleChange={handlePaymentTypeChange} required />
                     <FormInput label='GrabPay' type='radio'
@@ -95,7 +134,7 @@ const BillingForm = ({ step }) => {
                         handleChange={handlePaymentTypeChange} required />
                     <FormInput label='Credit/Debit Card' type='radio'
                         name='paymentType' value='CreditCard' checked={paymentType === 'CreditCard' ? "checked" : ""}
-                        handleChange={handlePaymentTypeChange} required />
+                        handleChange={handlePaymentTypeChange} required />*/}
                 </PaymentTypeContainer>
             </CheckoutFormFieldset>
             <CheckoutFormFieldset className={paymentType === 'COD' ? "hide" : "show"}>
@@ -167,15 +206,19 @@ const BillingForm = ({ step }) => {
                         label='Unit/House No. & Street Name' type='text'
                         name='address1' value={address1}
                         handleChange={handleChange} required />
-
+                    <CardElement
+                        options={cardOptions}
+                        onChange={handleStripeChange}
+                    />
                 </FormInputContainer>
             </CheckoutFormFieldset>
+            {paymentError ? <p>{paymentError}</p> : null}
             <CheckoutFormButtonContainer className={paymentType.toLocaleLowerCase()}>
                 <CheckoutBackButton type="button" isLink={true} onClick={() => {
                     dispatch(updateBillingDetails(billingDetails));
                     dispatch(updateCheckoutStep(2));
-                }}><BackArrow>&larr;</BackArrow>Back to Shipping</CheckoutBackButton>
-                <CustomButton type="submit">Place Order</CustomButton>
+                }}><BackArrow>&larr; </BackArrow>Back to Shipping</CheckoutBackButton>
+                <CustomButton type="submit" disabled={paymentDisbaled || paymentProcessing || paymentSucceeded}>Place Order</CustomButton>
             </CheckoutFormButtonContainer>
         </form>
     )

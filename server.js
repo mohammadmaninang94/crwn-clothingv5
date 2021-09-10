@@ -38,15 +38,20 @@ app.get('/service-worker.js', (req, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'build', 'service-worker.js'));
 });
 
-app.post('/create-stripe-payment-intent', (req, res) => {
-    const { amount, currency } = req.body;
+app.post('/create-stripe-payment-intent', async (req, res) => {
+    try {
+        const { amount, currency } = req.body;
 
-    const paymentIntent = await stripe.paymentIntents.create({
-        amount,
-        currency
-    });
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount,
+            currency
+        });
 
-    res.send({
-        clientSecret: paymentIntent.client_secret
-    });
+        res.send({
+            clientSecret: paymentIntent.client_secret
+        });
+    }
+    catch (error) {
+        res.sendStatus(400).send(error.message);
+    }
 });

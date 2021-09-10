@@ -1,37 +1,61 @@
-import { all, takeLatest, call, put, delay } from 'redux-saga/effects';
+import { all, takeLatest, call, put, delay, select } from 'redux-saga/effects';
 import axios from 'axios';
 
 import checkoutActionTypes from "./checkout.types";
 import {
     fetchShippingFeeSuccess, fetchShippingFeeFailed,
-    fetchStripePaymentIntentSuccess, fetchStripePaymentIntenteFailed
+    fetchStripePaymentIntentSuccess, fetchStripePaymentIntenteFailed,
+    confirmStripeCardPaymentSuccess, confirmStripeCardPaymentFailed
 } from './checkout.actions';
+
+import { selectCartTotalPrice } from '../cart/cart.selectors';
+import { selectPaymentClientSecret } from './checkout.selectors';
 
 
 export function* fetchShippingFee() {
     try {
-        yield delay(10000);
+        yield delay(5000);
         yield put(fetchShippingFeeSuccess(5));
     } catch (error) {
         yield put(fetchShippingFeeFailed(error.message));
     }
 }
 
-export function* fetchStripePaymentIntent({ payload: { amount, currency } }) {
+export function* fetchStripePaymentIntent() {
     try {
+        const cartTotal = yield select(selectCartTotalPrice);
+        const stripeAmount = cartTotal * 100;
         const res = yield axios({
-            url: 'create-stripe-payment-intent',
+            url: '/create-stripe-payment-intent',
             method: 'post',
             data: {
-                amount,
-                currency
+                amount: stripeAmount,
+                currency: 'php'
             }
         });
-        const clientSecret = yield res.json();
-        console.log(clientSecret);
-        // yield put(fetchStripePaymentIntentSuccess(clientSecret));
+        if (res.data) {
+            const clientSecret = res.data.clientSecret;
+            yield put(fetchStripePaymentIntentSuccess(clientSecret));
+        }
     } catch (error) {
         yield put(fetchStripePaymentIntenteFailed(error.message));
+    }
+}
+
+export function* confirmStripeCardPayment({ payload: { stripe, elements, CardElement } }) {
+    const clientSecret = yield select(selectPaymentClientSecret);
+    const payload = yield stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+            card: elements.getElement(CardElement)
+        }
+    });
+    if (payload.error) {
+        yield put(confirmStripeCardPaymentFailed(
+            `Payment failed ${payload.error.message}`,
+            payload
+        ));
+    } else {
+        yield put(confirmStripeCardPaymentSuccess(payload));
     }
 }
 
@@ -40,12 +64,17 @@ export function* onFetchShippingFeeStart() {
 }
 
 export function* onFetchingStripePaymentIntentStart() {
-    yield takeLatest(checkoutActionTypes.CREATE_STRIPE_PAYMENT_INTENT_START, fetchShippingFee);
+    yield takeLatest(checkoutActionTypes.CREATE_STRIPE_PAYMENT_INTENT_START, fetchStripePaymentIntent);
+}
+
+export function* onConfirmStripeCardPayment() {
+    yield takeLatest(checkoutActionTypes.CONFIRM_STRIPE_CARD_PAYMENT_START, confirmStripeCardPayment);
 }
 
 export default function* checkoutSagas() {
     yield all([
         call(onFetchShippingFeeStart),
-        call(onFetchingStripePaymentIntentStart)
+        call(onFetchingStripePaymentIntentStart),
+        call(onConfirmStripeCardPayment)
     ])
 }

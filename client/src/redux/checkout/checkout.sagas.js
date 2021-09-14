@@ -9,7 +9,7 @@ import {
 } from './checkout.actions';
 
 import { selectCartTotalPrice } from '../cart/cart.selectors';
-import { selectPaymentClientSecret } from './checkout.selectors';
+import { selectPaymentClientSecret, selectBillingDetails, selectShippingDetails } from './checkout.selectors';
 
 
 export function* fetchShippingFee() {
@@ -43,19 +43,49 @@ export function* fetchStripePaymentIntent() {
 }
 
 export function* confirmStripeCardPayment({ payload: { stripe, elements, CardElement } }) {
-    const clientSecret = yield select(selectPaymentClientSecret);
-    const payload = yield stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-            card: elements.getElement(CardElement)
+    try {
+        const clientSecret = yield select(selectPaymentClientSecret);
+        const billing = yield select(selectBillingDetails);
+        const shipping = yield select(selectShippingDetails);
+        const payload = yield stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: elements.getElement(CardElement),
+                billing_details: {
+                    name: `${billing.firstName} ${billing.lastName}`,
+                    phone: billing.mobileNo,
+                    email: billing.emailAddress,
+                    address: {
+                        city: billing.cityMun,
+                        country: 'PH',
+                        line1: billing.address1,
+                        postal_code: billing.zipCode,
+                        state: billing.province
+                    }
+                }
+            },
+            shipping: {
+                name: `${shipping.firstName} ${shipping.lastName}`,
+                phone: shipping.mobileNo,
+                carrier: `LBC`,
+                address: {
+                    city: shipping.cityMun,
+                    country: 'PH',
+                    line1: shipping.address1,
+                    postal_code: shipping.zipCode,
+                    state: shipping.province
+                }
+            }
+        });
+        if (payload.error) {
+            yield put(confirmStripeCardPaymentFailed(
+                `Payment failed ${payload.error.message}`,
+                payload
+            ));
+        } else {
+            yield put(confirmStripeCardPaymentSuccess(payload));
         }
-    });
-    if (payload.error) {
-        yield put(confirmStripeCardPaymentFailed(
-            `Payment failed ${payload.error.message}`,
-            payload
-        ));
-    } else {
-        yield put(confirmStripeCardPaymentSuccess(payload));
+    } catch (error) {
+        yield put(confirmStripeCardPaymentFailed(error.message, null));
     }
 }
 

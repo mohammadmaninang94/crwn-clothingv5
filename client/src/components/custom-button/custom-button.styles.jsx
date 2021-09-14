@@ -77,4 +77,8 @@ export const ButtonContainer = styled.button`
     }
 
     ${getCustomStyles}
+
+    &:disabled{
+        cursor: not-allowed;
+    }
 `;

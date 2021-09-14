@@ -75,7 +75,7 @@ const checkoutReducer = (state = INITIAL_STATE, action) => {
                 paymentDetails: {
                     ...paymentDetails,
                     succeeded: false,
-                    processing: false,
+                    processing: true,
                     disabled: true,
                     clientSecret: '',
                     error: ''
@@ -100,7 +100,7 @@ const checkoutReducer = (state = INITIAL_STATE, action) => {
                     ...paymentDetails,
                     succeeded: false,
                     processing: false,
-                    disabled: false,
+                    disabled: true,
                     clientSecret: '',
                     message: action.payload
                 }

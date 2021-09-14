@@ -48,6 +48,7 @@ const BillingForm = ({ step }) => {
 
     const handleSubmit = async event => {
         event.preventDefault();
+        dispatch(updateBillingDetails(billingDetails));
         dispatch(confirmStripeCardPaymentStart(stripe, elements, CardElement));
     };
 
@@ -115,6 +116,9 @@ const BillingForm = ({ step }) => {
         hidePostalCode: true
     };
 
+    const buttonDisabled = paymentType === 'stripe' && (paymentDisbaled || paymentProcessing || paymentSucceeded) ?
+        true : false;
+
     return (
         <form onSubmit={handleSubmit} className={step === 3 ? 'show' : 'hide'}>
             <CheckoutFormFieldset className='show'>
@@ -125,7 +129,7 @@ const BillingForm = ({ step }) => {
                         handleChange={handlePaymentTypeChange} required />
                     <FormInput label='Credit Card with Stripe' type='radio'
                         name='paymentType' value='stripe' checked={paymentType === 'stripe' ? "checked" : ""}
-                        handleChange={handlePaymentTypeChange} required />
+                        handleChange={handlePaymentTypeChange} required disabled={paymentDisbaled} />
                     {/*<FormInput label='Gcash' type='radio'
                         name='paymentType' value='GCash' checked={paymentType === 'GCash' ? "checked" : ""}
                         handleChange={handlePaymentTypeChange} required />
@@ -218,7 +222,7 @@ const BillingForm = ({ step }) => {
                     dispatch(updateBillingDetails(billingDetails));
                     dispatch(updateCheckoutStep(2));
                 }}><BackArrow>&larr; </BackArrow>Back to Shipping</CheckoutBackButton>
-                <CustomButton type="submit" disabled={paymentDisbaled || paymentProcessing || paymentSucceeded}>Place Order</CustomButton>
+                <CustomButton type="submit" disabled={buttonDisabled}>Place Order</CustomButton>
             </CheckoutFormButtonContainer>
         </form>
     )

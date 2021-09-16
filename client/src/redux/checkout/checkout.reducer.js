@@ -3,6 +3,7 @@ import checkoutActionTypes from "./checkout.types";
 const INITIAL_SHIPPING_FEE_MESSAGE = 'Calculated at next step';
 
 const INITIAL_STATE = {
+    id: null,
     shippingDetails: {
         firstName: '', lastName: '', mobileNo: '', emailAddress: '',
         address1: '', cityMun: '', province: '',
@@ -22,7 +23,7 @@ const INITIAL_STATE = {
         message: '',
         error: ''
     },
-    shippingFee: 0,
+    shippingFee: null,
     isFetchingShippingFee: false,
     shippingFeeMessage: INITIAL_SHIPPING_FEE_MESSAGE,
     step: 2
@@ -31,7 +32,13 @@ const INITIAL_STATE = {
 
 const checkoutReducer = (state = INITIAL_STATE, action) => {
     const paymentDetails = state.paymentDetails;
+    const shippingDetails = state.shippingDetails;
     switch (action.type) {
+        case checkoutActionTypes.UPDATE_ID:
+            return {
+                ...state,
+                id: action.payload
+            }
         case checkoutActionTypes.UPDATE_SHIPPING_DETAILS:
             return {
                 ...state,
@@ -59,6 +66,10 @@ const checkoutReducer = (state = INITIAL_STATE, action) => {
         case checkoutActionTypes.CALCULATE_SHIPPING_FEE_FAILED:
             return {
                 ...state,
+                shippingDetails: { //to recalculate shipping fee in shipping-form component
+                    ...shippingDetails,
+                    zipCode: ''
+                },
                 isFetchingShippingFee: false,
                 shippingFeeMessage: action.payload,
                 shippingFee: 0,

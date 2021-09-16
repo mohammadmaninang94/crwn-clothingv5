@@ -29,6 +29,11 @@ export const updateCheckoutStep = step => ({
     payload: step
 });
 
+export const updateCheckoutID = checkoutID => ({
+    type: checkoutActionTypes.UPDATE_ID,
+    payload: checkoutID
+});
+
 export const fetchStripePaymentIntentStart = () => ({
     type: checkoutActionTypes.CREATE_STRIPE_PAYMENT_INTENT_START,
 });

@@ -6,7 +6,7 @@ import CustomButton from './../custom-button/custom-button.component';
 export const CheckoutFormContainer = styled.div`
     width: 100%;
     font-size: 1.6rem; 
-    letter-spacing: .2rem;
+    letter-spacing: .1rem;
 
     & .StripeElement--webkit-autofill {
         background: transparent !important;
@@ -132,4 +132,9 @@ export const FormInputContainer = styled.div`
 
 export const PaymentTypeContainer = styled.div`
     margin-bottom: 3rem;
+`;
+
+export const PaymentMessageContainer = styled.p`
+    color: var(--color-red);
+    margin-top: 2rem;
 `;

@@ -107,4 +107,11 @@ export const getUserCartRef = async userId => {
     return cartSnapshot.docs[0].ref;
 };
 
+export const getCheckoutRef = async () => {
+    const CHECKOUT_COLLECTION_ID = 'checkouts';
+    const checkoutRef = firestore.collection(CHECKOUT_COLLECTION_ID); // queryReferece - documentReference
+
+    return checkoutRef;
+};
+
 export default firebase;

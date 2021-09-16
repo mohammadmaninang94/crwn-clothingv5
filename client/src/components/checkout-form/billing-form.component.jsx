@@ -21,7 +21,7 @@ import { GetDropdownData, GetDropdownDataByCode } from './checkout-form.utils';
 import {
     PaymentTypeContainer, CheckoutFormFieldset, CheckoutFormLegend,
     CheckoutFormButtonContainer, CustomInputWrapper, FormInputContainer,
-    CheckoutBackButton, BackArrow
+    CheckoutBackButton, BackArrow, PaymentMessageContainer
 } from "./checkout-form.styles";
 
 const BillingForm = ({ step }) => {
@@ -127,7 +127,7 @@ const BillingForm = ({ step }) => {
                     <FormInput label='Cash on delivery' type='radio'
                         name='paymentType' value='COD' checked={paymentType === 'COD' ? "checked" : ""}
                         handleChange={handlePaymentTypeChange} required />
-                    <FormInput label='Credit Card with Stripe' type='radio'
+                    <FormInput label='Credit Card' type='radio'
                         name='paymentType' value='stripe' checked={paymentType === 'stripe' ? "checked" : ""}
                         handleChange={handlePaymentTypeChange} required disabled={paymentDisbaled} />
                     {/*<FormInput label='Gcash' type='radio'
@@ -216,7 +216,7 @@ const BillingForm = ({ step }) => {
                     />
                 </FormInputContainer>
             </CheckoutFormFieldset>
-            {paymentError ? <p>{paymentError}</p> : null}
+            {paymentError ? <PaymentMessageContainer>{paymentError}</PaymentMessageContainer> : null}
             <CheckoutFormButtonContainer className={paymentType.toLocaleLowerCase()}>
                 <CheckoutBackButton type="button" isLink={true} onClick={() => {
                     dispatch(updateBillingDetails(billingDetails));

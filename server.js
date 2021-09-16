@@ -55,3 +55,12 @@ app.post('/create-stripe-payment-intent', async (req, res) => {
         res.sendStatus(400).send(error.message);
     }
 });
+
+app.post('/get-shipping-fee', (req, res) => {
+    try {
+        res.send({ shippingFee: 50 });
+    }
+    catch (error) {
+        res.sendStatus(400).send(error.message);
+    }
+});

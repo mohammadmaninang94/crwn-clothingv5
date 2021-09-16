@@ -1,23 +1,39 @@
-import { all, takeLatest, call, put, delay, select } from 'redux-saga/effects';
+import { all, takeLatest, call, put, select } from 'redux-saga/effects';
 import axios from 'axios';
+
+import { getCheckoutRef } from '../../firebase/firebase.utils';
 
 import checkoutActionTypes from "./checkout.types";
 import {
     fetchShippingFeeSuccess, fetchShippingFeeFailed,
     fetchStripePaymentIntentSuccess, fetchStripePaymentIntenteFailed,
-    confirmStripeCardPaymentSuccess, confirmStripeCardPaymentFailed
+    confirmStripeCardPaymentSuccess, confirmStripeCardPaymentFailed, updateCheckoutID
 } from './checkout.actions';
 
 import { selectCartTotalPrice } from '../cart/cart.selectors';
-import { selectPaymentClientSecret, selectBillingDetails, selectShippingDetails } from './checkout.selectors';
+import {
+    selectPaymentClientSecret, selectBillingDetails,
+    selectShippingDetails
+} from './checkout.selectors';
 
 
 export function* fetchShippingFee() {
     try {
-        yield delay(5000);
-        yield put(fetchShippingFeeSuccess(5));
+        const res = yield axios({
+            url: '/get-shipping-fee',
+            method: 'post'
+        });
+
+        if (res) {
+            const shippingFee = res.data.shippingFee;
+            yield put(fetchShippingFeeSuccess(shippingFee));
+            const checkoutID = yield insertCheckoutInFirebase(shippingFee);
+            if (checkoutID) {
+                yield put(updateCheckoutID(checkoutID));
+            }
+        }
     } catch (error) {
-        yield put(fetchShippingFeeFailed(error.message));
+        yield put(fetchShippingFeeFailed('Please try again'));
     }
 }
 
@@ -86,6 +102,21 @@ export function* confirmStripeCardPayment({ payload: { stripe, elements, CardEle
         }
     } catch (error) {
         yield put(confirmStripeCardPaymentFailed(error.message, null));
+    }
+}
+
+export function* insertCheckoutInFirebase(shippingFee) {
+    try {
+        const billingDetails = yield select(selectBillingDetails);
+        const shippingDetails = yield select(selectShippingDetails);
+        const checkoutRef = yield getCheckoutRef();
+        if (checkoutRef) {
+            const docRef = yield checkoutRef.add({ shippingDetails, billingDetails, shippingFee });
+            return docRef.id;
+        }
+    } catch (error) {
+        console.log('error in insert checkout', error);
+        return null;
     }
 }
 

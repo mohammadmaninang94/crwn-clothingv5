@@ -24,7 +24,7 @@ export const CheckoutTableContainer = styled.div`
     animation-timing-function: ease-out;
     transition: animation 0.8s cubic-bezier(0.86, 0, 0.07, 1);
     font-size: 1.6rem;
-    letter-spacing: .2rem;
+    letter-spacing: .1rem;
 
     @media only screen and (max-width: 56.25em),
     only screen and (max-width: 37.5em) {

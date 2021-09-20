@@ -1,20 +1,24 @@
 import { all, takeLatest, call, put, select } from 'redux-saga/effects';
 import axios from 'axios';
 
-import { getCheckoutRef } from '../../firebase/firebase.utils';
-
 import checkoutActionTypes from "./checkout.types";
 import {
     fetchShippingFeeSuccess, fetchShippingFeeFailed,
     fetchStripePaymentIntentSuccess, fetchStripePaymentIntenteFailed,
-    confirmStripeCardPaymentSuccess, confirmStripeCardPaymentFailed, updateCheckoutID
+    confirmStripeCardPaymentSuccess, confirmStripeCardPaymentFailed,
+    fetchCheckoutSuccess, fetchCheckoutFailed
 } from './checkout.actions';
+import { createCheckoutDocument, updateCheckoutDocument } from '../../firebase/firebase.firestore';
 
-import { selectCartTotalPrice } from '../cart/cart.selectors';
+import { selectCurrentUser } from '../user/user.selectors';
+import { selectCartTotalPrice, selectCartItems } from '../cart/cart.selectors';
 import {
     selectPaymentClientSecret, selectBillingDetails,
-    selectShippingDetails
+    selectShippingDetails,
+    selectCheckoutId,
+    selectShippingFee
 } from './checkout.selectors';
+
 
 
 export function* fetchShippingFee() {
@@ -27,10 +31,6 @@ export function* fetchShippingFee() {
         if (res) {
             const shippingFee = res.data.shippingFee;
             yield put(fetchShippingFeeSuccess(shippingFee));
-            const checkoutID = yield insertCheckoutInFirebase(shippingFee);
-            if (checkoutID) {
-                yield put(updateCheckoutID(checkoutID));
-            }
         }
     } catch (error) {
         yield put(fetchShippingFeeFailed('Please try again'));
@@ -61,8 +61,10 @@ export function* fetchStripePaymentIntent() {
 export function* confirmStripeCardPayment({ payload: { stripe, elements, CardElement } }) {
     try {
         const clientSecret = yield select(selectPaymentClientSecret);
+        const checkoutId = yield select(selectCheckoutId);
         const billing = yield select(selectBillingDetails);
         const shipping = yield select(selectShippingDetails);
+        const shippingFee = yield select(selectShippingFee);
         const payload = yield stripe.confirmCardPayment(clientSecret, {
             payment_method: {
                 card: elements.getElement(CardElement),
@@ -99,23 +101,28 @@ export function* confirmStripeCardPayment({ payload: { stripe, elements, CardEle
             ));
         } else {
             yield put(confirmStripeCardPaymentSuccess(payload));
+            const paymentDetails = {
+                paymentType: 'stripe',
+                gatewayResponse: payload
+            }
+            yield updateCheckoutDocument(checkoutId, shipping, billing, paymentDetails, shippingFee);
         }
     } catch (error) {
         yield put(confirmStripeCardPaymentFailed(error.message, null));
     }
 }
 
-export function* insertCheckoutInFirebase(shippingFee) {
+export function* fetchCheckoutIdInFirebase() {
     try {
-        const billingDetails = yield select(selectBillingDetails);
-        const shippingDetails = yield select(selectShippingDetails);
-        const checkoutRef = yield getCheckoutRef();
-        if (checkoutRef) {
-            const docRef = yield checkoutRef.add({ shippingDetails, billingDetails, shippingFee });
-            return docRef.id;
+        const currentUser = yield select(selectCurrentUser);
+        const cartItems = yield select(selectCartItems);
+        const checkoutId = yield createCheckoutDocument(currentUser.id, cartItems);
+        if (checkoutId) {
+            yield put(fetchCheckoutSuccess(checkoutId));
         }
     } catch (error) {
-        console.log('error in insert checkout', error);
+        console.log(error);
+        yield put(fetchCheckoutFailed('error in creating checkout'));
         return null;
     }
 }
@@ -132,10 +139,15 @@ export function* onConfirmStripeCardPayment() {
     yield takeLatest(checkoutActionTypes.CONFIRM_STRIPE_CARD_PAYMENT_START, confirmStripeCardPayment);
 }
 
+export function* onFetchingCheckoutId() {
+    yield takeLatest(checkoutActionTypes.CREATE_CHECKOUT_START, fetchCheckoutIdInFirebase);
+}
+
 export default function* checkoutSagas() {
     yield all([
         call(onFetchShippingFeeStart),
         call(onFetchingStripePaymentIntentStart),
-        call(onConfirmStripeCardPayment)
+        call(onConfirmStripeCardPayment),
+        call(onFetchingCheckoutId)
     ])
 }

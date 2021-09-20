@@ -1,6 +1,10 @@
 import { takeLatest, put, call, all } from 'redux-saga/effects';
 
-import { auth, googleProvider, createUserProfileDocument, getCurrentUser } from '../../firebase/firebase.utils';
+import { createUserProfileDocument } from '../../firebase/firebase.firestore';
+import {
+    getUserAuthFromEmailPasswordSignIn, getCurrentUser,
+    getUserAuthFromEmailPasswordSignUp, getUserAuthFromGoogleSignInPopup, userSignOut
+} from '../../firebase/firebase.auth';
 
 import userActionTypes from './user.types';
 import {
@@ -8,10 +12,10 @@ import {
     signOutFailure, signUpFailure, signUpSuccess
 } from './user.actions';
 
+
 export function* setSnapshotfromUserAuth(userAuth, additionalData) {
     try {
-        const userRef = yield call(createUserProfileDocument, userAuth, additionalData);
-        const userSnapshot = yield userRef.get();
+        const userSnapshot = yield call(createUserProfileDocument, userAuth, additionalData);
         yield put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
     } catch (error) {
         yield put(signInFailure(error.message));
@@ -20,7 +24,7 @@ export function* setSnapshotfromUserAuth(userAuth, additionalData) {
 
 export function* signInWithGoogle() {
     try {
-        const userAuth = yield auth.signInWithPopup(googleProvider);
+        const userAuth = yield getUserAuthFromGoogleSignInPopup();
         if (userAuth) {
             yield call(setSnapshotfromUserAuth, userAuth.user);
         }
@@ -31,7 +35,7 @@ export function* signInWithGoogle() {
 
 export function* signInWithEmail({ payload: { email, password } }) {
     try {
-        const userAuth = yield auth.signInWithEmailAndPassword(email, password);
+        const userAuth = yield getUserAuthFromEmailPasswordSignIn(email, password);
         if (userAuth) {
             yield call(setSnapshotfromUserAuth, userAuth.user);
         }
@@ -51,7 +55,7 @@ export function* isUserAuthenticated() {
 
 export function* signOut() {
     try {
-        yield auth.signOut();
+        yield userSignOut();
         yield put(signOutSuccess());
     } catch (error) {
         yield put(signOutFailure(error.message));
@@ -60,7 +64,7 @@ export function* signOut() {
 
 export function* signUp({ payload: { email, password, ...otherData } }) {
     try {
-        const { user } = yield auth.createUserWithEmailAndPassword(email, password);
+        const { user } = yield getUserAuthFromEmailPasswordSignUp(email, password);
         yield put(signUpSuccess({ user, additionalData: { ...otherData } }));
     } catch (error) {
         const errorCode = error.code;

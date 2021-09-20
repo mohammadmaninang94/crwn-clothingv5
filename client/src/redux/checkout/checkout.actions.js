@@ -29,9 +29,18 @@ export const updateCheckoutStep = step => ({
     payload: step
 });
 
-export const updateCheckoutID = checkoutID => ({
-    type: checkoutActionTypes.UPDATE_ID,
-    payload: checkoutID
+export const fetchCheckoutStart = () => ({
+    type: checkoutActionTypes.CREATE_CHECKOUT_START
+});
+
+export const fetchCheckoutSuccess = checkoutId => ({
+    type: checkoutActionTypes.CREATE_CHECKOUT_SUCCESS,
+    payload: checkoutId
+});
+
+export const fetchCheckoutFailed = message => ({
+    type: checkoutActionTypes.CREATE_CHECKOUT_FAILED,
+    payload: message
 });
 
 export const fetchStripePaymentIntentStart = () => ({

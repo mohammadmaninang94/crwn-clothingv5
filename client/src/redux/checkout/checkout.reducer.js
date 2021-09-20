@@ -165,6 +165,16 @@ const checkoutReducer = (state = INITIAL_STATE, action) => {
                     gatewayResponse: action.payload.stripePayload
                 }
             }
+        case checkoutActionTypes.CREATE_CHECKOUT_SUCCESS:
+            return {
+                ...state,
+                id: action.payload
+            }
+        case checkoutActionTypes.CREATE_CHECKOUT_FAILED:
+            return {
+                ...state,
+                shippingFeeMessage: action.payload
+            }
         default:
             return state;
     }

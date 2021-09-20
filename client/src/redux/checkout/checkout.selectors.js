@@ -2,6 +2,11 @@ import { createSelector } from 'reselect';
 
 const selectCheckout = state => state.checkout;
 
+export const selectCheckoutId = createSelector(
+    [selectCheckout],
+    checkout => checkout.id
+);
+
 export const selectCheckoutStep = createSelector(
     [selectCheckout],
     checkout => checkout.step

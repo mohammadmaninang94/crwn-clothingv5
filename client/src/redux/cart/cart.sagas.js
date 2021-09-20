@@ -1,47 +1,45 @@
 import { all, call, put, takeLatest, select } from 'redux-saga/effects';
 
-import { getUserCartRef } from '../../firebase/firebase.utils';
+import { getUserCartData, updateUserCartData } from '../../firebase/firebase.firestore';
 
 import { selectCartItems } from './cart.selectors';
 import { selectCurrentUser } from '../user/user.selectors';
+
 import userActionTypes from '../user/user.types';
 import cartActionTypes from './cart.types';
+import checkoutActionTypes from '../checkout/checkout.types';
+
 import { clearCart, setCartFromFirebase } from './cart.actions';
+
 
 export function* updateCartInFirebase() {
     const currentUser = yield select(selectCurrentUser);
     if (currentUser) {
         try {
-            const userCartRef = yield getUserCartRef(currentUser.id);
-            if (userCartRef) {
-                const items = yield select(selectCartItems);
-                yield userCartRef.update({ items });
-            }
+            const items = yield select(selectCartItems);
+            yield updateUserCartData(currentUser.id, items);
         } catch (error) {
             console.log(error);
         }
     }
 }
 
-export function* clearCartOnSignOutSuccess() {
+export function* clearCartOnSuccess() {
     yield put(clearCart());
 }
 
 export function* getUserCartItemsFromFirebase({ payload: user }) {
-    const userCartRef = yield getUserCartRef(user.id);
-    if (userCartRef) {
-        const cartSnapshot = yield userCartRef.get();
-        if (cartSnapshot.exists) {
-            const cartData = cartSnapshot.data();
-            if (cartData) {
-                yield put(setCartFromFirebase(cartData.items));
-            }
-        }
+    const cartData = yield getUserCartData(user.id);
+    if (cartData) {
+        yield put(setCartFromFirebase(cartData.items));
     }
 }
 
 export function* onSignOutSuccess() {
-    yield takeLatest(userActionTypes.SIGN_OUT_SUCCESS, clearCartOnSignOutSuccess)
+    yield takeLatest([
+        userActionTypes.SIGN_OUT_SUCCESS,
+        checkoutActionTypes.CONFIRM_STRIPE_CARD_PAYMENT_SUCCESS
+    ], clearCartOnSuccess)
 }
 
 export function* onUserSignInSuccess() {

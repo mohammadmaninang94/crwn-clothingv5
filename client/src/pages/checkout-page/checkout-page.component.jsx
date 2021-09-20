@@ -1,4 +1,5 @@
-import { connect } from 'react-redux';
+import { useEffect } from 'react';
+import { connect, useDispatch } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { selectCartItems, selectCartTotalPrice, selectCartSubTotalPrice } from '../../redux/cart/cart.selectors';
@@ -9,8 +10,16 @@ import CheckoutTable from '../../components/checkout-table/checkout-table.compon
 import Spinner from '../../components/spinner/spinner.component';
 
 import { CheckoutPageContainer } from './checkout-page.styles';
+import { fetchCheckoutStart } from '../../redux/checkout/checkout.actions';
 
-const CheckoutPage = ({ cartItems, cartTotalPrice, shippingFee, isFetchingShippingFee, isPaymentProcessing, shippingFeeMessage, cartSubTotalPrice }) => (
+const CheckoutPage = ({ cartItems, cartTotalPrice, shippingFee, isFetchingShippingFee, isPaymentProcessing, shippingFeeMessage, cartSubTotalPrice }) => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchCheckoutStart());
+    }, [dispatch]);
+
+    return (
     <CheckoutPageContainer>
         <CheckoutForm />
         <CheckoutTable cartItems={cartItems}
@@ -21,7 +30,7 @@ const CheckoutPage = ({ cartItems, cartTotalPrice, shippingFee, isFetchingShippi
         {isFetchingShippingFee || isPaymentProcessing ?
             <Spinner /> : null}
     </CheckoutPageContainer>
-);
+)};
 
 const mapStateToProps = createStructuredSelector({
     cartItems: selectCartItems,

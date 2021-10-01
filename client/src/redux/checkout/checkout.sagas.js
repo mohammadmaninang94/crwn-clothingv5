@@ -1,4 +1,5 @@
 import { all, takeLatest, call, put, select } from 'redux-saga/effects';
+import { push } from 'connected-react-router'
 import axios from 'axios';
 
 import checkoutActionTypes from "./checkout.types";
@@ -100,12 +101,13 @@ export function* confirmStripeCardPayment({ payload: { stripe, elements, CardEle
                 payload
             ));
         } else {
-            yield put(confirmStripeCardPaymentSuccess(payload));
             const paymentDetails = {
                 paymentType: 'stripe',
                 gatewayResponse: payload
             }
             yield updateCheckoutDocument(checkoutId, shipping, billing, paymentDetails, shippingFee);
+            yield put(confirmStripeCardPaymentSuccess(payload));
+            yield put(push('/'));
         }
     } catch (error) {
         yield put(confirmStripeCardPaymentFailed(error.message, null));

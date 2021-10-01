@@ -35,7 +35,7 @@ export function* getUserCartItemsFromFirebase({ payload: user }) {
     }
 }
 
-export function* onSignOutSuccess() {
+export function* onClearCartSuccess() {
     yield takeLatest([
         userActionTypes.SIGN_OUT_SUCCESS,
         checkoutActionTypes.CONFIRM_STRIPE_CARD_PAYMENT_SUCCESS
@@ -57,7 +57,7 @@ export function* onCartChange() {
 
 export default function* cartSagas() {
     yield all([
-        call(onSignOutSuccess),
+        call(onClearCartSuccess),
         call(onUserSignInSuccess),
         call(onCartChange),
     ]);

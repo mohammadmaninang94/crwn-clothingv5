@@ -7,7 +7,8 @@ import {
     fetchShippingFeeSuccess, fetchShippingFeeFailed,
     fetchStripePaymentIntentSuccess, fetchStripePaymentIntenteFailed,
     confirmStripeCardPaymentSuccess, confirmStripeCardPaymentFailed,
-    fetchCheckoutSuccess, fetchCheckoutFailed
+    fetchCheckoutSuccess, fetchCheckoutFailed,
+    confirmCODPaymentSuccess, confirmCODPaymentFailed
 } from './checkout.actions';
 import { createCheckoutDocument, updateCheckoutDocument } from '../../firebase/firebase.firestore';
 
@@ -15,12 +16,9 @@ import { selectCurrentUser } from '../user/user.selectors';
 import { selectCartTotalPrice, selectCartItems } from '../cart/cart.selectors';
 import {
     selectPaymentClientSecret, selectBillingDetails,
-    selectShippingDetails,
-    selectCheckoutId,
-    selectShippingFee
+    selectShippingDetails, selectCheckoutId,
+    selectShippingFee, selectPaymentType
 } from './checkout.selectors';
-
-
 
 export function* fetchShippingFee() {
     try {
@@ -66,6 +64,8 @@ export function* confirmStripeCardPayment({ payload: { stripe, elements, CardEle
         const billing = yield select(selectBillingDetails);
         const shipping = yield select(selectShippingDetails);
         const shippingFee = yield select(selectShippingFee);
+        const paymentType = yield select(selectPaymentType);
+
         const payload = yield stripe.confirmCardPayment(clientSecret, {
             payment_method: {
                 card: elements.getElement(CardElement),
@@ -102,7 +102,7 @@ export function* confirmStripeCardPayment({ payload: { stripe, elements, CardEle
             ));
         } else {
             const paymentDetails = {
-                paymentType: 'stripe',
+                paymentType,
                 gatewayResponse: payload
             }
             yield updateCheckoutDocument(checkoutId, shipping, billing, paymentDetails, shippingFee);
@@ -111,6 +111,24 @@ export function* confirmStripeCardPayment({ payload: { stripe, elements, CardEle
         }
     } catch (error) {
         yield put(confirmStripeCardPaymentFailed(error.message, null));
+    }
+}
+
+export function* confirmCODPayment() {
+    try {
+        const checkoutId = yield select(selectCheckoutId);
+        const shipping = yield select(selectShippingDetails);
+        const shippingFee = yield select(selectShippingFee);
+        const paymentType = yield select(selectPaymentType);
+
+        const paymentDetails = {
+            paymentType
+        };
+        yield updateCheckoutDocument(checkoutId, shipping, null, paymentDetails, shippingFee);
+        yield put(confirmCODPaymentSuccess());
+        yield put(push('/'));
+    } catch (error) {
+        yield put(confirmCODPaymentFailed(error.message));
     }
 }
 
@@ -141,6 +159,10 @@ export function* onConfirmStripeCardPayment() {
     yield takeLatest(checkoutActionTypes.CONFIRM_STRIPE_CARD_PAYMENT_START, confirmStripeCardPayment);
 }
 
+export function* onConfirmCODPayment() {
+    yield takeLatest(checkoutActionTypes.CONFIRM_COD_PAYMENT_START, confirmCODPayment);
+}
+
 export function* onFetchingCheckoutId() {
     yield takeLatest(checkoutActionTypes.CREATE_CHECKOUT_START, fetchCheckoutIdInFirebase);
 }
@@ -150,6 +172,7 @@ export default function* checkoutSagas() {
         call(onFetchShippingFeeStart),
         call(onFetchingStripePaymentIntentStart),
         call(onConfirmStripeCardPayment),
+        call(onConfirmCODPayment),
         call(onFetchingCheckoutId)
     ])
 }

@@ -2,11 +2,12 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
-import { updateCheckoutStep, updateBillingDetails } from '../../redux/checkout/checkout.actions';
 import {
+    updateCheckoutStep, updateBillingDetails, confirmCODPaymentStart,
     fetchStripePaymentIntentStart, updatePaymentDisabled,
     updatePaymentError, confirmStripeCardPaymentStart
 } from '../../redux/checkout/checkout.actions';
+
 import {
     selectBillingDetails, selectPaymentDisabled,
     selectPaymentProcessing, selectPaymentError, selectPaymentSucceeded
@@ -49,7 +50,11 @@ const BillingForm = ({ step }) => {
     const handleSubmit = async event => {
         event.preventDefault();
         dispatch(updateBillingDetails(billingDetails));
-        dispatch(confirmStripeCardPaymentStart(stripe, elements, CardElement));
+        if (paymentType === 'COD') {
+            dispatch(confirmCODPaymentStart());
+        } else {
+            dispatch(confirmStripeCardPaymentStart(stripe, elements, CardElement));
+        }
     };
 
     const handleChange = event => {
@@ -119,6 +124,8 @@ const BillingForm = ({ step }) => {
     const buttonDisabled = paymentType === 'stripe' && (paymentDisbaled || paymentProcessing || paymentSucceeded) ?
         true : false;
 
+    const reqAttr = paymentType === 'COD' ? false : true;
+
     return (
         <form onSubmit={handleSubmit} className={step === 3 ? 'show' : 'hide'}>
             <CheckoutFormFieldset className='show'>
@@ -147,32 +154,32 @@ const BillingForm = ({ step }) => {
                     <CustomInputWrapper>
                         <FormInput label='First Name' type='text'
                             name='firstName' value={firstName}
-                            handleChange={handleChange} required />
+                            handleChange={handleChange} required={reqAttr} />
                         <FormInput
                             label='Last Name' type='text'
                             name='lastName' value={lastName}
-                            handleChange={handleChange} required />
+                            handleChange={handleChange} required={reqAttr} />
                     </CustomInputWrapper>
                     <CustomInputWrapper>
                         <FormInput
                             label='Email address' type='email'
                             name='emailAddress' value={emailAddress}
-                            handleChange={handleChange} required />
+                            handleChange={handleChange} required={reqAttr} />
                         <FormInput
                             label='Mobile Number' type='text'
                             name='mobileNo' value={mobileNo}
-                            handleChange={handleChange} required />
+                            handleChange={handleChange} required={reqAttr} />
                     </CustomInputWrapper>
                     <CustomInputWrapper>
                         <FormSelect name='region' value={region}
-                            label='Region' handleChange={handleChange} required>
+                            label='Region' handleChange={handleChange} required={reqAttr}>
                             <option value=''>Region</option>
                             {dropdownAddress.regions.map(({ name, reg_code }) => (
                                 <option key={`billing-${reg_code}`} value={name} data-code={reg_code}>{name}</option>
                             ))}
                         </FormSelect>
                         <FormSelect name='province' value={province}
-                            handleChange={handleChange} required>
+                            handleChange={handleChange} required={reqAttr}>
                             <option value=''>Province</option>
                             {dropdownAddress.provinces ?
                                 dropdownAddress.provinces.map(({ name, prov_code }) => (
@@ -182,7 +189,7 @@ const BillingForm = ({ step }) => {
                     </CustomInputWrapper>
                     <CustomInputWrapper>
                         <FormSelect name='cityMun' value={cityMun}
-                            handleChange={handleChange} required>
+                            handleChange={handleChange} required={reqAttr}>
                             <option value=''>City or Municipality</option>
                             {dropdownAddress.cityAndMun ?
                                 dropdownAddress.cityAndMun.map(({ name, mun_code }) => (
@@ -190,7 +197,7 @@ const BillingForm = ({ step }) => {
                                 )) : null}
                         </FormSelect>
                         <FormSelect name='barangay' value={barangay}
-                            handleChange={handleChange} required>
+                            handleChange={handleChange} required={reqAttr}>
                             <option value=''>Barangay</option>
                             {dropdownAddress.barangays ?
                                 dropdownAddress.barangays.map(({ name, mun_code }) => (
@@ -199,7 +206,7 @@ const BillingForm = ({ step }) => {
                         </FormSelect>
                     </CustomInputWrapper>
                     <FormSelect name='zipCode' value={zipCode}
-                        handleChange={handleChange} required>
+                        handleChange={handleChange} required={reqAttr}>
                         <option value=''>Zip Code</option>
                         {dropdownAddress.zipCodes ?
                             dropdownAddress.zipCodes.map(code => (
@@ -209,7 +216,7 @@ const BillingForm = ({ step }) => {
                     <FormInput
                         label='Unit/House No. & Street Name' type='text'
                         name='address1' value={address1}
-                        handleChange={handleChange} required />
+                        handleChange={handleChange} required={reqAttr} />
                     <CardElement
                         options={cardOptions}
                         onChange={handleStripeChange}

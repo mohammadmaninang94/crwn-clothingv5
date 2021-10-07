@@ -38,7 +38,8 @@ export function* getUserCartItemsFromFirebase({ payload: user }) {
 export function* onClearCartSuccess() {
     yield takeLatest([
         userActionTypes.SIGN_OUT_SUCCESS,
-        checkoutActionTypes.CONFIRM_STRIPE_CARD_PAYMENT_SUCCESS
+        checkoutActionTypes.CONFIRM_STRIPE_CARD_PAYMENT_SUCCESS,
+        checkoutActionTypes.CONFIRM_COD_PAYMENT_SUCCESS
     ], clearCartOnSuccess)
 }
 

@@ -109,9 +109,11 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => 
 };
 
 export const createCheckoutDocument = async (userId, cartItems) => {
+    const createdAt = new Date();
     const newCheckoutRef = await addDoc(collection(firestore, firestorePaths.checkouts), {
         cartItems,
-        userId
+        userId,
+        createdAt
     });
     return newCheckoutRef.id;
 };
@@ -119,13 +121,15 @@ export const createCheckoutDocument = async (userId, cartItems) => {
 export const updateCheckoutDocument = async (id, shippingDetails, billingDetails, paymentDetails, shippingFee) => {
     const checkoutRef = doc(firestore, `${firestorePaths.checkouts}/${id}`);
     const checkoutSnapshot = await getDoc(checkoutRef);
+    const updatedAt = new Date();
 
     if (checkoutSnapshot.exists()) {
         await updateDoc(checkoutRef, {
             shippingDetails,
             billingDetails,
             shippingFee,
-            paymentDetails
+            paymentDetails,
+            updatedAt
         });
     }
 };

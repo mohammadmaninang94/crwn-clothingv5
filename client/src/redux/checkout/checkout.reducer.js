@@ -143,7 +143,19 @@ const checkoutReducer = (state = INITIAL_STATE, action) => {
                     error: ''
                 }
             }
+        case checkoutActionTypes.CONFIRM_COD_PAYMENT_START:
+            return {
+                ...state,
+                paymentDetails: {
+                    ...paymentDetails,
+                    processing: true,
+                    disabled: true,
+                    paymentType: 'COD',
+                    error: ''
+                }
+            }
         case checkoutActionTypes.CONFIRM_STRIPE_CARD_PAYMENT_SUCCESS:
+        case checkoutActionTypes.CONFIRM_COD_PAYMENT_SUCCESS:
             return {
                 ...state,
                 paymentDetails: {
@@ -154,6 +166,7 @@ const checkoutReducer = (state = INITIAL_STATE, action) => {
                 }
             }
         case checkoutActionTypes.CONFIRM_STRIPE_CARD_PAYMENT_FAILED:
+        case checkoutActionTypes.CONFIRM_COD_PAYMENT_FAILED:
             return {
                 ...state,
                 paymentDetails: {

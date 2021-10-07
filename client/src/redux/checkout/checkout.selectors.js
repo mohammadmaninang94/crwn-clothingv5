@@ -43,8 +43,8 @@ export const selectBillingDetails = createSelector(
 );
 
 export const selectPaymentType = createSelector(
-    [selectCheckout],
-    checkout => checkout.paymentType
+    [selectPaymentDetails],
+    paymentDetails => paymentDetails.paymentType
 );
 
 export const selectPaymentDisabled = createSelector(

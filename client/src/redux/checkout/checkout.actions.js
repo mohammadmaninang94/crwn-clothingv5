@@ -81,3 +81,16 @@ export const updatePaymentError = message => ({
     type: checkoutActionTypes.UPDATE_PAYMENT_ERROR,
     payload: message
 });
+
+export const confirmCODPaymentStart = () => ({
+    type: checkoutActionTypes.CONFIRM_COD_PAYMENT_START
+});
+
+export const confirmCODPaymentSuccess = () => ({
+    type: checkoutActionTypes.CONFIRM_COD_PAYMENT_SUCCESS
+});
+
+export const confirmCODPaymentFailed = error => ({
+    type: checkoutActionTypes.CONFIRM_COD_PAYMENT_FAILED,
+    payload: { error }
+});

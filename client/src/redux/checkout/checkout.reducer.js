@@ -2,7 +2,7 @@ import checkoutActionTypes from "./checkout.types";
 
 const INITIAL_SHIPPING_FEE_MESSAGE = 'Calculated at next step';
 
-const INITIAL_STATE = {
+const checkoutState = {
     id: null,
     shippingDetails: {
         firstName: '', lastName: '', mobileNo: '', emailAddress: '',
@@ -29,6 +29,7 @@ const INITIAL_STATE = {
     step: 2
 };
 
+const INITIAL_STATE = JSON.parse(JSON.stringify(checkoutState));
 
 const checkoutReducer = (state = INITIAL_STATE, action) => {
     const paymentDetails = state.paymentDetails;
@@ -156,15 +157,7 @@ const checkoutReducer = (state = INITIAL_STATE, action) => {
             }
         case checkoutActionTypes.CONFIRM_STRIPE_CARD_PAYMENT_SUCCESS:
         case checkoutActionTypes.CONFIRM_COD_PAYMENT_SUCCESS:
-            return {
-                ...state,
-                paymentDetails: {
-                    ...paymentDetails,
-                    succeeded: true,
-                    processing: false,
-                    gatewayResponse: action.payload
-                }
-            }
+            return JSON.parse(JSON.stringify(checkoutState));
         case checkoutActionTypes.CONFIRM_STRIPE_CARD_PAYMENT_FAILED:
         case checkoutActionTypes.CONFIRM_COD_PAYMENT_FAILED:
             return {
@@ -174,8 +167,7 @@ const checkoutReducer = (state = INITIAL_STATE, action) => {
                     succeeded: false,
                     processing: false,
                     disabled: false,
-                    error: action.payload.error,
-                    gatewayResponse: action.payload.stripePayload
+                    error: action.payload
                 }
             }
         case checkoutActionTypes.CREATE_CHECKOUT_SUCCESS:

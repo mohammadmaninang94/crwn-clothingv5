@@ -73,6 +73,9 @@ const BillingForm = ({ step }) => {
 
     const handlePaymentTypeChange = event => {
         const { value } = event.target;
+        if (value === 'stripe') {
+            dispatch(fetchStripePaymentIntentStart());
+        }
         setPaymentType(value);
     }
 
@@ -92,10 +95,6 @@ const BillingForm = ({ step }) => {
         populatedDropdowns();
         // eslint-disable-next-line
     }, []);
-
-    useEffect(() => {
-        dispatch(fetchStripePaymentIntentStart());
-    }, [dispatch]);
 
     const cardOptions = {
         style: {

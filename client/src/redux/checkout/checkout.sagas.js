@@ -106,11 +106,11 @@ export function* confirmStripeCardPayment({ payload: { stripe, elements, CardEle
                 gatewayResponse: payload
             }
             yield updateCheckoutDocument(checkoutId, shipping, billing, paymentDetails, shippingFee);
-            yield put(confirmStripeCardPaymentSuccess(payload));
+            yield put(confirmStripeCardPaymentSuccess());
             yield put(push('/'));
         }
     } catch (error) {
-        yield put(confirmStripeCardPaymentFailed(error.message, null));
+        yield put(confirmStripeCardPaymentFailed(error.message));
     }
 }
 

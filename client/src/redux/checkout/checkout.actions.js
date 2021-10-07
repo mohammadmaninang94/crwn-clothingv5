@@ -62,14 +62,13 @@ export const confirmStripeCardPaymentStart = (stripe, elements, CardElement) => 
     payload: { stripe, elements, CardElement }
 });
 
-export const confirmStripeCardPaymentSuccess = (stripePayload) => ({
-    type: checkoutActionTypes.CONFIRM_STRIPE_CARD_PAYMENT_SUCCESS,
-    payload: stripePayload
+export const confirmStripeCardPaymentSuccess = () => ({
+    type: checkoutActionTypes.CONFIRM_STRIPE_CARD_PAYMENT_SUCCESS
 });
 
-export const confirmStripeCardPaymentFailed = (error, stripePayload) => ({
+export const confirmStripeCardPaymentFailed = error => ({
     type: checkoutActionTypes.CONFIRM_STRIPE_CARD_PAYMENT_FAILED,
-    payload: { error, stripePayload }
+    payload: error
 });
 
 export const updatePaymentDisabled = disabled => ({
@@ -92,5 +91,5 @@ export const confirmCODPaymentSuccess = () => ({
 
 export const confirmCODPaymentFailed = error => ({
     type: checkoutActionTypes.CONFIRM_COD_PAYMENT_FAILED,
-    payload: { error }
+    payload: error
 });

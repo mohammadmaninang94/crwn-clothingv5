@@ -69,7 +69,7 @@ export const BackgroundImageContainer = styled.div`
     background-position: center center;
     background-size: cover;
     transition: all 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
-    background-image: ${props => `url(${props.imageUrl})`};
+    background-image: ${props => `url(${props.imgSrc})`};
 `;
 
 export const ContentContainer = styled.div`

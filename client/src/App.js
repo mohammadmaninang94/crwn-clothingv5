@@ -9,7 +9,14 @@ import { checkUserSession } from './redux/user/user.actions';
 
 import AppContainer from './App.container';
 
-const stripePromise = loadStripe('pk_test_51GrdPxGXQEpKYmCgqpBcsxmOHkFPCIIGBaxpXOB5cqDtcwDm3C5GcZFQoIWiA3NgHpyFBTHBPDW0kTCFMQAeCE6a003uQm1GaR');
+let stripePromise;
+
+const getStripe = () => {
+  if (!stripePromise) {
+    stripePromise = loadStripe('pk_test_51GrdPxGXQEpKYmCgqpBcsxmOHkFPCIIGBaxpXOB5cqDtcwDm3C5GcZFQoIWiA3NgHpyFBTHBPDW0kTCFMQAeCE6a003uQm1GaR');
+  }
+  return stripePromise;
+};
 
 const App = ({ checkUserSession, currentUser }) => {
   useEffect(() => {
@@ -17,7 +24,7 @@ const App = ({ checkUserSession, currentUser }) => {
   }, [checkUserSession]);
 
   return (
-    <Elements stripe={stripePromise}>
+    <Elements stripe={getStripe()}>
       <AppContainer currentUser={currentUser} />
     </Elements>
   );

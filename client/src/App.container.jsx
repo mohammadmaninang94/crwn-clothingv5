@@ -16,14 +16,14 @@ const ShopPage = lazy(() => import('./pages/shop-page/shop-page.component'));
 const SignInSignUpPage = lazy(() => import('./pages/sign-in-sign-up-page/sign-in-sign-up-page.component'));
 const CheckoutPage = lazy(() => import('./pages/checkout-page/checkout-page.component'));
 const CartPage = lazy(() => import('./pages/cart-page/cart-page.component'));
-
+const NotFoundPage = lazy(() => import('./pages/not-found-page/not-found-page.component'));
 
 const AppContainer = ({ currentUser }) => (
     <AppWrapper>
         <Header />
-        <Switch>
-            <ErrorBoundary>
-                <Suspense fallback={<Spinner />} >
+        <ErrorBoundary>
+            <Suspense fallback={<Spinner />} >
+                <Switch>
                     <Route exact path={pageRoutes.HOME} render={() => <HomePage />} />
                     <Route path={pageRoutes.SHOP} render={routeProps => <ShopPage {...routeProps} />} />
                     <Route exact path={pageRoutes.CART} render={() => <CartPage />} />
@@ -35,10 +35,12 @@ const AppContainer = ({ currentUser }) => (
                             <SignInSignUpPage />
                         )
                     } />
-                    <CartSidebar />
-                </Suspense>
-            </ErrorBoundary>
-        </Switch>
+                    <Route path={pageRoutes.NOT_FOUND} render={() => <NotFoundPage />} />
+                    <Redirect to={pageRoutes.NOT_FOUND} />
+                </Switch>
+                <CartSidebar />
+            </Suspense>
+        </ErrorBoundary>
     </AppWrapper>
 );
 

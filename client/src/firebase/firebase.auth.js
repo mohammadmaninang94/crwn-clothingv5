@@ -1,6 +1,6 @@
 import {
     signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-    signOut, GoogleAuthProvider, onAuthStateChanged, getAuth
+    signOut, GoogleAuthProvider, onAuthStateChanged, getAuth, browserPopupRedirectResolver
 } from "firebase/auth";
 import firebaseApp from "./firebase.app";
 
@@ -21,7 +21,7 @@ export const getCurrentUser = () => {
 };
 
 export const getUserAuthFromGoogleSignInPopup = async () => {
-    return await signInWithPopup(auth, googleProvider);
+    return await signInWithPopup(auth, googleProvider, browserPopupRedirectResolver);
 };
 
 export const getUserAuthFromEmailPasswordSignUp = async (email, password) => {

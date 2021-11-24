@@ -4,7 +4,6 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import pageRoutes from './assests/data/route.data';
 
 import Header from './components/header/header.component';
-import CartSidebar from './components/cart-sidebar/cart-sidebar.component';
 import ErrorBoundary from './components/error-boundary/error-boundary.component';
 
 import { AppWrapper } from './App.styles';
@@ -17,6 +16,7 @@ const SignInSignUpPage = lazy(() => import('./pages/sign-in-sign-up-page/sign-in
 const CheckoutPage = lazy(() => import('./pages/checkout-page/checkout-page.component'));
 const CartPage = lazy(() => import('./pages/cart-page/cart-page.component'));
 const NotFoundPage = lazy(() => import('./pages/not-found-page/not-found-page.component'));
+const CartSidebar = lazy(() => import('./components/cart-sidebar/cart-sidebar.component'));
 
 const AppContainer = ({ currentUser }) => (
     <AppWrapper>

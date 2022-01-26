@@ -1,10 +1,19 @@
 import {
     signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-    signOut, GoogleAuthProvider, onAuthStateChanged, getAuth, browserPopupRedirectResolver
+    signOut, GoogleAuthProvider, onAuthStateChanged, browserPopupRedirectResolver,
+    initializeAuth, indexedDBLocalPersistence, browserLocalPersistence, browserSessionPersistence
 } from "firebase/auth";
 import firebaseApp from "./firebase.app";
 
-const auth = getAuth(firebaseApp);
+const auth = initializeAuth(firebaseApp,
+    {
+        persistence: [
+            indexedDBLocalPersistence,
+            browserLocalPersistence,
+            browserSessionPersistence
+        ]
+    });
+    
 const googleProvider = new GoogleAuthProvider();
 googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
 googleProvider.setCustomParameters({

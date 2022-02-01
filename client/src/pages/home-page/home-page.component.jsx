@@ -1,5 +1,5 @@
 import { Profiler } from 'react';
-import Directory from '../../components/directory/directory.component';
+import Directory from '../../components/directory/directory.container';
 
 const HomePage = () => (
     <Profiler id='Directory' onRender={(id, phase, actualDuration) => {

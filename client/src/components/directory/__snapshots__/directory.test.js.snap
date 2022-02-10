@@ -1,3 +1,123 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Render Directory 1`] = `ShallowWrapper {}`;
+exports[`Directory component renders correctly 1`] = `
+<div
+  className="sc-jSgupP juiZeu"
+>
+  <div
+    className="sc-dlfnbm jKujKF"
+    onClick={[Function]}
+    title="hats"
+  >
+    <div
+      className="sc-bdfBwQ jzvLqE"
+    />
+    <div
+      className="sc-gsTCUz beQqUW"
+    >
+      <h2
+        className="sc-hKgILt jwqUMt"
+      >
+        hats
+      </h2>
+      <span
+        className="sc-eCssSg eQuoXW"
+      >
+        Shop Now
+      </span>
+    </div>
+  </div>
+  <div
+    className="sc-dlfnbm gZJZwt"
+    onClick={[Function]}
+    title="jackets"
+  >
+    <div
+      className="sc-bdfBwQ hPGIbn"
+    />
+    <div
+      className="sc-gsTCUz beQqUW"
+    >
+      <h2
+        className="sc-hKgILt jwqUMt"
+      >
+        jackets
+      </h2>
+      <span
+        className="sc-eCssSg eQuoXW"
+      >
+        Shop Now
+      </span>
+    </div>
+  </div>
+  <div
+    className="sc-dlfnbm kMCrCK"
+    onClick={[Function]}
+    title="sneakers"
+  >
+    <div
+      className="sc-bdfBwQ exgQJA"
+    />
+    <div
+      className="sc-gsTCUz beQqUW"
+    >
+      <h2
+        className="sc-hKgILt jwqUMt"
+      >
+        sneakers
+      </h2>
+      <span
+        className="sc-eCssSg eQuoXW"
+      >
+        Shop Now
+      </span>
+    </div>
+  </div>
+  <div
+    className="sc-dlfnbm cUYBAg"
+    onClick={[Function]}
+    title="womens"
+  >
+    <div
+      className="sc-bdfBwQ fuJqLj"
+    />
+    <div
+      className="sc-gsTCUz beQqUW"
+    >
+      <h2
+        className="sc-hKgILt jwqUMt"
+      >
+        womens
+      </h2>
+      <span
+        className="sc-eCssSg eQuoXW"
+      >
+        Shop Now
+      </span>
+    </div>
+  </div>
+  <div
+    className="sc-dlfnbm dmWhCB"
+    onClick={[Function]}
+    title="mens"
+  >
+    <div
+      className="sc-bdfBwQ hgLyjY"
+    />
+    <div
+      className="sc-gsTCUz beQqUW"
+    >
+      <h2
+        className="sc-hKgILt jwqUMt"
+      >
+        mens
+      </h2>
+      <span
+        className="sc-eCssSg eQuoXW"
+      >
+        Shop Now
+      </span>
+    </div>
+  </div>
+</div>
+`;

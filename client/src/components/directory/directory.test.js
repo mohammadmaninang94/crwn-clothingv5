@@ -15,7 +15,6 @@ describe('Directory component', () => {
                     <Directory sections={sections} />
                 </MemoryRouter>
             );
-            console.log('beforeAll', wrapper);
         });
 
         test(`exact titles from props`, () => {
@@ -25,7 +24,6 @@ describe('Directory component', () => {
         });
 
         test(`${sections.length} menu item component`, () => {
-            console.log('test 2', wrapper);
             expect(wrapper.queryAllByRole('heading')).toHaveLength(sections.length);
         });
     });

@@ -1,0 +1,121 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header rendering initial render should display sign in button and cart 0 1`] = `
+<div
+  className="sc-hKgILt edpTQa"
+>
+  <a
+    aria-current="page"
+    className="sc-eCssSg fRGvgp header__link--active"
+    href="/"
+    onClick={[Function]}
+    style={Object {}}
+  >
+    <svg>
+      crown.svg
+    </svg>
+  </a>
+  <nav
+    className="sc-jSgupP fNIVQT"
+  >
+    <a
+      aria-current={null}
+      className="sc-gKsewC dllOHe"
+      href="/shop"
+      onClick={[Function]}
+    >
+      shop
+    </a>
+    <a
+      aria-current={null}
+      className="sc-gKsewC dllOHe"
+      href="/contact"
+      onClick={[Function]}
+    >
+      contact
+    </a>
+    <a
+      aria-current={null}
+      className="sc-gKsewC dllOHe"
+      href="/signin"
+      onClick={[Function]}
+    >
+      sign in
+    </a>
+    <div
+      className="sc-bdfBwQ yXoxa"
+      onClick={[Function]}
+    >
+      <svg
+        className="sc-gsTCUz iapUUP"
+      >
+        shopping-bag.svg
+      </svg>
+      <span
+        className="sc-dlfnbm hmRxPi"
+      >
+        0
+      </span>
+    </div>
+  </nav>
+</div>
+`;
+
+exports[`Header rendering initial render should display sign out button and with cart items count 1`] = `
+<div
+  className="sc-hKgILt edpTQa"
+>
+  <a
+    aria-current="page"
+    className="sc-eCssSg fRGvgp header__link--active"
+    href="/"
+    onClick={[Function]}
+    style={Object {}}
+  >
+    <svg>
+      crown.svg
+    </svg>
+  </a>
+  <nav
+    className="sc-jSgupP fNIVQT"
+  >
+    <a
+      aria-current={null}
+      className="sc-gKsewC dllOHe"
+      href="/shop"
+      onClick={[Function]}
+    >
+      shop
+    </a>
+    <a
+      aria-current={null}
+      className="sc-gKsewC dllOHe"
+      href="/contact"
+      onClick={[Function]}
+    >
+      contact
+    </a>
+    <div
+      className="sc-gKsewC dllOHe"
+      onClick={[Function]}
+    >
+      sign out
+    </div>
+    <div
+      className="sc-bdfBwQ yXoxa"
+      onClick={[Function]}
+    >
+      <svg
+        className="sc-gsTCUz iapUUP"
+      >
+        shopping-bag.svg
+      </svg>
+      <span
+        className="sc-dlfnbm hmRxPi"
+      >
+        1
+      </span>
+    </div>
+  </nav>
+</div>
+`;

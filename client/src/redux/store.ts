@@ -31,6 +31,10 @@ export const store = createStore(
     applyMiddleware(...middlewares)
 );
 
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
+
 export const persistor = persistStore(store);
 
 sagaMiddleware.run(rootSaga);

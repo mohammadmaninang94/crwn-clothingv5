@@ -1,15 +1,14 @@
 import { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js/pure';
+import { useAppDispatch, useAppSelector } from './redux/hooks';
 
 import { selectCurrentUser } from './redux/user/user.selectors';
 import { checkUserSession } from './redux/user/user.actions';
 
 import AppContainer from './App.container';
 
-let stripePromise;
+let stripePromise: any;
 
 const getStripe = () => {
   if (!stripePromise) {
@@ -19,10 +18,14 @@ const getStripe = () => {
   return stripePromise;
 };
 
-const App = ({ checkUserSession, currentUser }) => {
+const App = () => {
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
-    checkUserSession();
-  }, [checkUserSession]);
+    dispatch(checkUserSession());
+  }, [dispatch]);
+
+  const currentUser = useAppSelector(selectCurrentUser);
 
   return (
     <Elements stripe={getStripe()}>
@@ -31,13 +34,4 @@ const App = ({ checkUserSession, currentUser }) => {
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
-});
-
-const mapDispatchToProps = dispatch => ({
-  checkUserSession: () => dispatch(checkUserSession())
-});
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

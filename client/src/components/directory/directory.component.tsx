@@ -2,10 +2,16 @@ import MenuItem from '../menu-item/menu-item.component';
 
 import { DirectoryContainer } from './directory.styles';
 
-const Directory = ({ sections }) => (
+import { Section } from './directory.container';
+
+export type DirectoryProps = {
+    sections: Array<Section>
+}
+
+const Directory = ({ sections }: DirectoryProps): JSX.Element => (
     <DirectoryContainer>
         {
-            sections.map(({ id, ...otherProps }) => (
+            sections.map(({ id, ...otherProps } : Section) => (
                 <MenuItem key={id} {...otherProps} />
             ))
         }
